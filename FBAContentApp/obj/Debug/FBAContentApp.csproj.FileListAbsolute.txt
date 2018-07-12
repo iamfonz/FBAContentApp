@@ -29,3 +29,5 @@ C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAC
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\Views\AmazonWarehouses.baml
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\Views\SettingsView.g.cs
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\Views\SettingsView.baml
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.Migrations.Init.resources
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.Migrations.Init2.resources
