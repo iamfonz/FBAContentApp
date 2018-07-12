@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="FBAContentApp.Views.AmazonWarehouses"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FBAContentApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            
+        </Grid.RowDefinitions>
+
+        <Label Content="Amazon Fulfillment Centers" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0"/>
+
+        <ListBox Name="CentersListBox" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="3"/>
+
+        <Button Content="Add a Warehouse" Style="{StaticResource ShipmentButtonsStyle}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4"/>
+
+        <Button Content="Back To Main Menu" Style="{StaticResource BackToMenuBtn}" Click="BackToMain_Button_Click" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5"/>
+
+    </Grid>
+</UserControl>
