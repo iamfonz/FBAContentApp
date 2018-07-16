@@ -24,5 +24,11 @@ namespace FBAContentApp.Entities
         public virtual State State { get; set; }
 
         public string ZipCode { get; set; }
+
+        public override string ToString()
+        {
+            return WarehouseCode + " : " + AddressLine;
+        }
+
     }
 }

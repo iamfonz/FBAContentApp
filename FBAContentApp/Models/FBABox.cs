@@ -93,19 +93,6 @@ namespace FBAContentApp.Models
             return boxid;
         }
 
-        public string ContentsToFile()
-        {
-            string format = "BoxID:" + boxid + Environment.NewLine;
-            foreach (Item i in contents)
-            {
-                format += i.ToString() + Environment.NewLine;
-            }
-            format += Environment.NewLine;
-
-            return format;
-
-        }
-
 
         /// <summary>
         /// Adds item to the list of scanned items List. If the item is already in the List, 1 quantity is added; else the item is added with 1 qty.
@@ -125,12 +112,25 @@ namespace FBAContentApp.Models
         }
 
         /// <summary>
-        /// Formats the proper string for Amazon's Fulfillment 2D barcode requires
+        /// Formats the proper string for Amazon's Fulfillment 2D barcode requirements.
         /// </summary>
         /// <returns>Returns formatted string for Amazon's 2d Barcode requirements</returns>
         public string FBALabel()
         {
             string format = "AMZN,PO:" + po + ",";
+            for(int i = 0; i < contents.Count; i++)
+            {
+                if (i != (contents.Count - 1))
+                {
+                    format += contents[i].ToString() + ",";
+                }
+                else
+                {
+                    format += contents[i].ToString();
+                }
+                
+
+            }
             foreach (Item i in contents)
             {
                 format += i.ToString();

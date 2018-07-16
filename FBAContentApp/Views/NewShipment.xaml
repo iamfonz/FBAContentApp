@@ -31,7 +31,7 @@
 
         <Label Content="Process Shipment" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" />
 
-        <Button x:Name="btn_AddBoxes" Content="Add Boxes" Grid.Column="2" Grid.ColumnSpan ="2" Grid.Row="1" Margin="0,20,0,20" Padding="30, 5, 30, 5"/>
+        <Button x:Name="btn_AddBoxes" Content="Add Boxes" Grid.Column="2" Grid.ColumnSpan ="2" Grid.Row="1" Margin="0,20,0,20" Padding="30, 5, 30, 5" Click="btn_AddBoxes_Click"/>
 
         <ListBox x:Name="lsbx_AddedBoxes"  Height="auto"  HorizontalContentAlignment="Center"  TextOptions.TextFormattingMode="Display" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="3"/>
 
@@ -41,7 +41,7 @@
         <Label x:Name="lbl_BoxCount" Content="0" Style="{StaticResource newShipLabelStyle}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="6" />
 
         <ComboBox x:Name="cmbx_AmazonWhses" Height="Auto" Margin="30,30,10,30" FontSize="14"  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="7"/>
-        <Button x:Name="btn_AddWhse" Content="Add New Warehouse" Style="{StaticResource ShipmentButtonsStyle}" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="7" FontSize="12" Margin="10,30,30,30"/>
+        <Button x:Name="btn_AddWhse" Content="Add New Warehouse" Style="{StaticResource ShipmentButtonsStyle}" Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="7" FontSize="12" Margin="10,30,30,30" Click="btn_AddWhse_Click"/>
 
         <Button x:Name="btn_PrintBoxes" Content="Print Boxes" Style="{StaticResource ShipmentButtonsStyle}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" />
         <Button x:Name="btn_Clear" Content="Clear All" Style="{StaticResource ShipmentButtonsStyle}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="8"  />

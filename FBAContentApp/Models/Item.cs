@@ -45,12 +45,12 @@ namespace FBAContentApp.Models
 
         #region Methods
         /// <summary>
-        /// Overridden ToString method. Formats the object as "FNSKU:(value),QTY:(Value),".
+        /// Overridden ToString method. Formats the object as "FNSKU:(value),QTY:(Value)".
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            string format = "FNSKU:" + ItemCode + ",QTY:" + Quantity + ",";
+            string format = "FNSKU:" + ItemCode + ",QTY:" + Quantity;
 
             return format;
         }

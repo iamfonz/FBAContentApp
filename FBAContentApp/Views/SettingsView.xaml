@@ -23,7 +23,16 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!--view Title-->
         <Label Content="App Settings" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4"/>
+        
+        <!--Ship From Company Settings-->
+        <Label Content="Ship From" Style="{StaticResource newShipLabelStyle}" Grid.Column="1" Grid.Row="1"/>
+        <!--Display the Company Address-->
+        <Label Content="{Binding Source={StaticResource Settings}, Path=CompanyAddressId}" Style="{StaticResource amzWhLabelStyle}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <ListBox Grid.Column="4" Grid.Row="1">
+            <!-- Add DataBinding to grab all CompanyAddress from DbContext and display the company name in the listboxItem.Content-->
+        </ListBox>
 
 
         <Button Content="Back To Main Menu" Style="{StaticResource BackToMenuBtn}" Click="BackToMain_Button_Click" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5"/>
