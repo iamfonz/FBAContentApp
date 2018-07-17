@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using FBAContentApp.Exceptions;
 
 namespace FBAContentApp.ViewModels
 {
@@ -26,13 +28,17 @@ namespace FBAContentApp.ViewModels
         /// <summary>
         /// Object that creates ZPL Labels of the box content for the shipment being processed.
         /// </summary>
-        public LabelFactory LabelFactory { get; set; }
+        public LabelFactory LabelsFactory { get; set; }
 
         /// <summary>
         /// String name of the printer that will print the ZPL Labels.
         /// </summary>
         public string LabelPrinter { get; set; }
 
+        /// <summary>
+        /// String of the directory where box content files will be saved.
+        /// </summary>
+        public string SaveDirectory { get; set; }
         #endregion
 
         #region Constructors
@@ -41,9 +47,9 @@ namespace FBAContentApp.ViewModels
         /// </summary>
         public ProcessShipmentViewModel()
         {
-            AmzWarehouses = new List<AmazonWarehouse>(); 
+            AmzWarehouses = new List<AmazonWarehouse>();
             Shipment = new FBAShipment();
-            LabelFactory = new LabelFactory();
+            LabelsFactory = new LabelFactory();
             PopulateAmazonWarehouse();
             PopulateSettingDefaults();
 
@@ -62,7 +68,7 @@ namespace FBAContentApp.ViewModels
             PopulateAmazonWarehouse();
 
             Shipment = new FBAShipment();
-            LabelFactory = new LabelFactory();
+            LabelsFactory = new LabelFactory();
 
             PopulateSettingDefaults();
             //process the excel file to add box contents to Shipment.Boxes model.
@@ -70,7 +76,7 @@ namespace FBAContentApp.ViewModels
         }
         #endregion
 
-       #region Methods
+        #region Methods
 
 
         /// <summary>
@@ -90,6 +96,9 @@ namespace FBAContentApp.ViewModels
             var fSplit = splitPath[splitPath.Length - 1];
             var name = fSplit.Split('.');
             string poName = name[0];
+
+            //set the shipmentID 
+            Shipment.ShipmentID = poName;
 
             using (ExcelPackage xlPackage = new ExcelPackage(exlBook))
             {
@@ -159,12 +168,16 @@ namespace FBAContentApp.ViewModels
         /// </summary>
         public void MakeBoxLabels()
         {
-            if(Shipment.Boxes != null)
+            if (Shipment.Boxes != null)
             {
-                //re-instantiate a LabelFactory object with the overloaded constructor
-                LabelFactory = new LabelFactory(Shipment.Boxes, Shipment.FullfillmentShipTo, Shipment.CompanyShipFrom);
+                //set properties to label factory
+                LabelsFactory.ShipmentBoxes = Shipment.Boxes;
+                LabelsFactory.AmzWarehouse = Shipment.FullfillmentShipTo;
+                LabelsFactory.ShipFromAddress = Shipment.CompanyShipFrom;
+
                 //create the labels after the necessary items have been passed into the constructor
-                LabelFactory.CreateLabels();
+                LabelsFactory.CreateLabels();
+
             }
         }
 
@@ -177,7 +190,7 @@ namespace FBAContentApp.ViewModels
             Shipment.Boxes.Clear();
             Shipment.ShipmentID = "";
             Shipment.FullfillmentShipTo = new AmazonWarehouse();
-            LabelFactory = new LabelFactory();
+            LabelsFactory = new LabelFactory();
         }
 
 
@@ -188,7 +201,7 @@ namespace FBAContentApp.ViewModels
         {
             using (var db = new Models.AppContext())
             {
-                AmzWarehouses = db.AmazonWarehouses.ToList();
+                AmzWarehouses = db.AmazonWarehouses.Include(s => s.State).ToList();
             }
         }
 
@@ -199,22 +212,25 @@ namespace FBAContentApp.ViewModels
         {
             using (var db = new Models.AppContext())
             {
-                if (Properties.Settings.Default["CompanyAddressId"] != null) //check if there's a default CompanyAddress to ship from
-                {
-                    int addressID = (int)Properties.Settings.Default["CompanyAddressId"];
-                    CompanyAddress shipFr = new CompanyAddress();
-                    shipFr = db.CompanyAddresses.Where(b => b.Id == addressID).FirstOrDefault();
-                    Shipment.CompanyShipFrom = shipFr;
-                }
-                else
-                {   //else use the sample default that was seeded in the DbContext Configuration
-                    Shipment.CompanyShipFrom = db.CompanyAddresses.Where(b => b.Id == 0).FirstOrDefault();
-                }
-
-
-                
+                Shipment.CompanyShipFrom = db.CompanyAddresses.Where(b => b.Id == Properties.Settings.Default.CompanyAddressId).Include(b => b.State).FirstOrDefault();
+               
             }
-            
+
+            if (Properties.Settings.Default.LabelPrinter != null)
+            {
+                LabelPrinter = Properties.Settings.Default.LabelPrinter;
+            }
+
+            if (Properties.Settings.Default.SaveFileDir != null)
+            {
+                SaveDirectory = Properties.Settings.Default.SaveFileDir;
+            }
+            else
+            {
+                SaveDirectory = Environment.CurrentDirectory;
+            }
+
+
         }
 
         /// <summary>
@@ -222,7 +238,60 @@ namespace FBAContentApp.ViewModels
         /// </summary>
         public void SaveShipmentToDB()
         {
-            //saves all the shipment data to the Db
+            //create shipment entity and set props
+            Entities.Shipment entShipment = new Shipment()
+            {
+                ShipFromCenter = this.Shipment.CompanyShipFrom,
+                ShipToCenter = this.Shipment.FullfillmentShipTo,
+                ShipmentId = this.Shipment.ShipmentID,
+                Boxes = new List<ShipmentBox>()
+                
+            };
+
+            //add each box one to entShipment entity 
+            foreach (var box in Shipment.Boxes)
+            {
+                ShipmentBox entBox = new ShipmentBox
+                {
+                    BoxContentString = box.FBALabel(),
+                    BoxId = box.BoxID,
+                    Shipment = entShipment
+                };
+
+                entShipment.Boxes.Add(entBox);
+            }
+
+            //save to the database
+            using (var db = new Models.AppContext())
+            {
+                if(db.Shipments.Any( s => s.ShipmentId == entShipment.ShipmentId))
+                {
+                    throw new AlreadyExistsInDBException("ShipmentID: '" + entShipment.ShipmentId + "' Already exists in the database."); 
+                }
+                else
+                {
+                    db.Shipments.Add(entShipment);
+                    db.SaveChanges();
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// Saves the shipment information to the current directory or the specified save file directory
+        /// in settings, if the user has set one.
+        /// </summary>
+        public void SaveShipmentToFile()
+        {
+            try
+            {
+                File.WriteAllText(SaveDirectory, Shipment.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new NonSaveableException(message: "Unable to save the contents of shipment '" + Shipment.ShipmentID + "' for the following reason:" + ex.Message);
+            }
         }
 
 

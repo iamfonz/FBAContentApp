@@ -22,23 +22,18 @@ namespace FBAContentApp.Models
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public Item() : this("", 0)
+        public Item() 
         {
         }
-
-        public Item(string iItem) : this(iItem, 0)
-        {
-        }
-
+        
         /// <summary>
         /// Overloaded constructor to create Item object.
         /// </summary>
         /// <param name="iItem">Item Code string (FNSKU)</param>
-        /// <param name="iqty">Quantity of items</param>
-        public Item(string iItem, int iqty)
+        public Item(string iItem)
         {
             ItemCode = iItem;
-            Quantity = iqty;
+            Quantity = 1;
         }
         #endregion
 

@@ -10,7 +10,8 @@ namespace FBAContentApp.Models
     public class LabelFactory
     {
         #region Properties
-        List<ZPLLabel> BoxLabels { get; set; }
+
+        public List<ZPLLabel> BoxLabels { get; set; }
 
         public List<FBABox> ShipmentBoxes { get; set; }
 
@@ -26,11 +27,13 @@ namespace FBAContentApp.Models
         {
             BoxLabels = new List<ZPLLabel>();
             ShipmentBoxes = new List<FBABox>();
-
+            AmzWarehouse = new AmazonWarehouse();
+            ShipFromAddress = new CompanyAddress();
         }
 
         public LabelFactory(List<FBABox> boxes, AmazonWarehouse shipTo, CompanyAddress shipFrom)
         {
+            ShipmentBoxes = boxes;
             BoxLabels = new List<ZPLLabel>();
             AmzWarehouse = shipTo;
             ShipFromAddress = shipFrom;
@@ -51,8 +54,10 @@ namespace FBAContentApp.Models
             {
                 //create a new label for each box.
                 ZPLLabel label = new ZPLLabel(AmzWarehouse, ShipFromAddress, box);
+
                 //create the label, pass in box count so the label prints out "Box # of BoxCount"
                 label.CreateLabel(boxCount);
+
                 //add label to list of labels
                 BoxLabels.Add(label);
 

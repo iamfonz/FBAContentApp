@@ -128,12 +128,6 @@ namespace FBAContentApp.Models
                 {
                     format += contents[i].ToString();
                 }
-                
-
-            }
-            foreach (Item i in contents)
-            {
-                format += i.ToString();
             }
 
             return format;

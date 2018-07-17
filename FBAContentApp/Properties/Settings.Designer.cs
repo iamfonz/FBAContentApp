@@ -25,7 +25,7 @@ namespace FBAContentApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public int CompanyAddressId {
             get {
                 return ((int)(this["CompanyAddressId"]));
@@ -44,6 +44,18 @@ namespace FBAContentApp.Properties {
             }
             set {
                 this["LabelPrinter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SaveFileDir {
+            get {
+                return ((string)(this["SaveFileDir"]));
+            }
+            set {
+                this["SaveFileDir"] = value;
             }
         }
     }

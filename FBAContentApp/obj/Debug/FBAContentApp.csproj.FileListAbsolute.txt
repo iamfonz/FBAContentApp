@@ -34,3 +34,5 @@ C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAC
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\bin\Debug\EPPlus.dll
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\bin\Debug\EPPlus.xml
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\bin\Debug\Newtonsoft.Json.xml

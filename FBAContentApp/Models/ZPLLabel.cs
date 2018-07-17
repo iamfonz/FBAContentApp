@@ -64,7 +64,7 @@ namespace FBAContentApp.Models
         {
             command = "";
             //Below is the ZPL command being created for each label. 
-            command += "^XA" + // ^XA starts the ZPL Command for the printer to interpret
+            command = "^XA" + // ^XA starts the ZPL Command for the printer to interpret
 
             //start of the Amazon Warehouse Label
             "^FO50,50^ADN,40,20^FDFBA^FS" +
@@ -95,14 +95,14 @@ namespace FBAContentApp.Models
                  "^FO130,450,^BY3" +
                  //pdf417 barcode for Amazon Label of BOXID
                  "^B7N,8,6,,,N^FD" + Box.BoxID + "^FS" +
-                 "^FO5, 700^ADN,30,15^FDPlease leave this label uncovered^FS" +
+                 "^FO5, 700^ADN,30,15^FDPlease do not cover this label^FS" +
                  "^FO30,755^GB700,0,8^FS" +
                  "^FO50,780^ADN,40,20^FDBox Content^FS" +
 
                  //PDF417 barcode of the box content(string)
                  "^FO30,840,^BY" +
-                 "^B7N,8,6,10,75,N^FD" + Box.Contents + "^FS" +
-                 "^FO5, 1550^ADN,30,15^FDPlease leave this label uncovered^FS" +
+                 "^B7N,8,6,10,75,N^FD" + Box.FBALabel() + "^FS" +
+                 "^FO5, 1550^ADN,30,15^FDPlease do not cover this label^FS" +
                  "^XZ";
         }
 

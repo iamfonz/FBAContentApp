@@ -1,6 +1,7 @@
 ﻿using FBAContentApp.Entities;
 using FBAContentApp.Utilities;
 using FBAContentApp.ViewModels;
+using FBAContentApp.Exceptions;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -126,13 +127,63 @@ namespace FBAContentApp.Views
         /// <param name="e"></param>
         private void btn_PrintBoxes_Click(object sender, RoutedEventArgs e)
         {
-            // Check that there are boxes
-                //check that an Amazon Warehouse has been selected
-                    //if both above are true, make viewModel create ZPL labels.
-                    //send them to the printer.
-                    //show dialogbox that it was processed successfully
-                    //save the shipment to database from the ViewModel
-            
+            if(ProcessShipmentVM.Shipment.Boxes.Count > 0)// Check that there are boxes
+            {
+                if(cmbx_AmazonWhses.SelectedItem is AmazonWarehouse)//check that an Amazon Warehouse has been selected
+                {
+                    string messageString = "";
+                    // make viewModel create ZPL labels.
+                    ProcessShipmentVM.MakeBoxLabels();
+                    //send them to the printer, only if a printer is configured
+                    ProcessShipmentVM.LabelPrinter = "Zebra  ZP 450-200 dpi";
+                    if (ProcessShipmentVM.LabelPrinter != null)
+                    {
+                        foreach (var label in ProcessShipmentVM.LabelsFactory.BoxLabels)
+                        {
+                            RawPrinterHelper.SendStringToPrinter(ProcessShipmentVM.LabelPrinter, label.ZPLCommand);
+                        }
+
+                        //save the shipment to database from the ViewModel
+                        try
+                        {
+                            ProcessShipmentVM.SaveShipmentToDB();
+                            messageString += "Saved Shipment " + ProcessShipmentVM.Shipment.ShipmentID + " to database.";
+                        }catch(AlreadyExistsInDBException ex)
+                        {
+                            messageString += "Unable to save Shipment " + ProcessShipmentVM.Shipment.ShipmentID + " to database.";
+                        }
+                        
+                        //save shipment file
+                        try
+                        {
+                            ProcessShipmentVM.SaveShipmentToFile();
+                            messageString += "\nSaved the contents file successfully!";
+                        }
+                        catch (Exceptions.NonSaveableException exc)
+                        {
+                            messageString += "\n" + exc.Message;
+                        }
+
+                        //show dialogbox that it was processed successfully
+                        MessageBox.Show(messageString);
+                    }
+                    else
+                    {
+                        MessageBox.Show("A default printer is not set in the settings. Go to Main Menu>Settings and select an installed printer and click 'Save'. Then try again.");
+                    }
+                    
+                }
+                else
+                {
+                    MessageBox.Show("You must select an Amazon warehouse from the drop-down menu.");
+                }   
+
+            }
+            else
+            {
+                MessageBox.Show("There are no boxes loaded into the shipment! Clicl 'Add Boxes' and select and Excel Workbook that contains box content.");
+            }
+
             //showDialog boxes informing user of what's missing.
 
         }
