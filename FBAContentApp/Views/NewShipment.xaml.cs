@@ -39,6 +39,10 @@ namespace FBAContentApp.Views
 
         }
 
+        #region Methods
+
+        #endregion
+
         #region Events
 
         /// <summary>
@@ -132,6 +136,20 @@ namespace FBAContentApp.Views
             //showDialog boxes informing user of what's missing.
 
         }
+
+        /// <summary>
+        /// Clears all data from the process shipment view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            lsbx_AddedBoxes.Items.Clear();
+            lsbx_AddedBoxes.Items.Refresh();
+            ProcessShipmentVM.ClearAll();
+        }
+
+
         #endregion
 
 
@@ -143,8 +161,9 @@ namespace FBAContentApp.Views
             throw new NotImplementedException();
         }
 
+
         #endregion
 
-       
+        
     }
 }

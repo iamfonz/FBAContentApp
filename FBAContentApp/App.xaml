@@ -12,6 +12,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="FontWeight" Value="Bold"/>
+           
         </Style>
 
         <!--MainMenu.xaml Styling-->
@@ -47,6 +48,23 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Grid.Column" Value="0"/>
+        </Style>
+        
+<!--Styling Settings Page-->
+        <Style x:Key="settingsLabels" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,20,0,20"/>
+        </Style>
+        <Style x:Key="companyAddressLabel" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,20,0,20"/>
+        </Style>
+
+        <Style x:Key="okaySaveBtns" TargetType="Button">
+            <Setter Property="Margin" Value="20,20,20,20"/>
         </Style>
 
         <properties:Settings x:Key="Settings"/>

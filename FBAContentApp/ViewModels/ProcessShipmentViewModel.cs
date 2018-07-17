@@ -210,6 +210,8 @@ namespace FBAContentApp.ViewModels
                 {   //else use the sample default that was seeded in the DbContext Configuration
                     Shipment.CompanyShipFrom = db.CompanyAddresses.Where(b => b.Id == 0).FirstOrDefault();
                 }
+
+
                 
             }
             
