@@ -1,4 +1,5 @@
 ﻿using FBAContentApp.Entities;
+using FBAContentApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,17 @@ namespace FBAContentApp.ViewModels
     public class SettingsViewModel
     {
         #region Properties
-        public List<CompanyAddress> CompanyAddresses { get; set; }
+        public List<CompanyAddressModel> CompanyAddresses { get; set; }
 
         public List<string> InstalledPrinters { get; set; }
+
+        public string OuputDirectory { get; set; }
 
         #endregion
 
         #region Constructors
         public SettingsViewModel() {
-            CompanyAddresses = new List<CompanyAddress>();
+            CompanyAddresses = new List<CompanyAddressModel>();
             InstalledPrinters = new List<string>();
             PopulateLists();
         }
@@ -37,7 +40,12 @@ namespace FBAContentApp.ViewModels
             //populate all companyaddresses saved in the DB
             using (var db = new Models.AppContext())
             {
-                CompanyAddresses = db.CompanyAddresses.ToList();
+                List<CompanyAddress> comps = db.CompanyAddresses.ToList();
+
+                foreach(CompanyAddress comp in comps)
+                {
+                    CompanyAddresses.Add(new CompanyAddressModel(comp));
+                }
             }
         }
 

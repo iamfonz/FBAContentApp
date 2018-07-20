@@ -15,9 +15,9 @@ namespace FBAContentApp.Models
 
         public List<FBABox> ShipmentBoxes { get; set; }
 
-        public AmazonWarehouse AmzWarehouse { get; set; }
+        public AmzWarehouseModel AmzWarehouse { get; set; }
 
-        public CompanyAddress ShipFromAddress { get; set; }
+        public CompanyAddressModel ShipFromAddress { get; set; }
 
         #endregion
 
@@ -27,11 +27,11 @@ namespace FBAContentApp.Models
         {
             BoxLabels = new List<ZPLLabel>();
             ShipmentBoxes = new List<FBABox>();
-            AmzWarehouse = new AmazonWarehouse();
-            ShipFromAddress = new CompanyAddress();
+            AmzWarehouse = new AmzWarehouseModel();
+            ShipFromAddress = new CompanyAddressModel();
         }
 
-        public LabelFactory(List<FBABox> boxes, AmazonWarehouse shipTo, CompanyAddress shipFrom)
+        public LabelFactory(List<FBABox> boxes, AmzWarehouseModel shipTo, CompanyAddressModel shipFrom)
         {
             ShipmentBoxes = boxes;
             BoxLabels = new List<ZPLLabel>();

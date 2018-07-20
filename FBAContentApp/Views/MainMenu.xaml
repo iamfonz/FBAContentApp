@@ -27,7 +27,7 @@
         <Label Content="FBA Box Content App" Style="{StaticResource titleLabel}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0"/>
         
 <!--Menu Buttons-->
-        <Button Content="New Shipment" Style="{StaticResource mainMenuButtons}" Grid.Row="1" Click="NewShipment_Button_Click"/>
+        <Button Content="Process Shipment" Style="{StaticResource mainMenuButtons}" Grid.Row="1" Click="NewShipment_Button_Click"/>
 
         <Button Content="History" Style="{StaticResource mainMenuButtons}" Grid.Row="2" Click="History_Button_Click"/>
         

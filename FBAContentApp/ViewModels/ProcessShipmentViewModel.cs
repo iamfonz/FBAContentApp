@@ -23,7 +23,7 @@ namespace FBAContentApp.ViewModels
         /// <summary>
         /// A List of AmazonWarehouse to be populated in the ListBox for selecting a ShipTo AmazonWarehouse
         /// </summary>
-        public List<AmazonWarehouse> AmzWarehouses { get; set; }
+        public List<AmzWarehouseModel> AmzWarehouses { get; set; }
 
         /// <summary>
         /// Object that creates ZPL Labels of the box content for the shipment being processed.
@@ -47,7 +47,7 @@ namespace FBAContentApp.ViewModels
         /// </summary>
         public ProcessShipmentViewModel()
         {
-            AmzWarehouses = new List<AmazonWarehouse>();
+            AmzWarehouses = new List<AmzWarehouseModel>();
             Shipment = new FBAShipment();
             LabelsFactory = new LabelFactory();
             PopulateAmazonWarehouse();
@@ -64,7 +64,7 @@ namespace FBAContentApp.ViewModels
         public ProcessShipmentViewModel(string file)
         {
             //initialize properties
-            AmzWarehouses = new List<AmazonWarehouse>();
+            AmzWarehouses = new List<AmzWarehouseModel>();
             PopulateAmazonWarehouse();
 
             Shipment = new FBAShipment();
@@ -189,7 +189,7 @@ namespace FBAContentApp.ViewModels
         {
             Shipment.Boxes.Clear();
             Shipment.ShipmentID = "";
-            Shipment.FullfillmentShipTo = new AmazonWarehouse();
+            Shipment.FullfillmentShipTo = new AmzWarehouseModel();
             LabelsFactory = new LabelFactory();
         }
 
@@ -200,8 +200,15 @@ namespace FBAContentApp.ViewModels
         private void PopulateAmazonWarehouse()
         {
             using (var db = new Models.AppContext())
-            {
-                AmzWarehouses = db.AmazonWarehouses.Include(s => s.State).ToList();
+            {  
+                List<AmazonWarehouse> warehousees = db.AmazonWarehouses.Include(s => s.State).ToList();
+
+                foreach(AmazonWarehouse amz in warehousees)
+                {
+                    AmzWarehouseModel amzModel = new AmzWarehouseModel(amz);
+                    AmzWarehouses.Add(amzModel);
+                }
+
             }
         }
 
@@ -212,8 +219,9 @@ namespace FBAContentApp.ViewModels
         {
             using (var db = new Models.AppContext())
             {
-                Shipment.CompanyShipFrom = db.CompanyAddresses.Where(b => b.Id == Properties.Settings.Default.CompanyAddressId).Include(b => b.State).FirstOrDefault();
-               
+
+                CompanyAddress company = db.CompanyAddresses.Where(b => b.Id == Properties.Settings.Default.CompanyAddressId).Include(b => b.State).FirstOrDefault();
+                Shipment.CompanyShipFrom = new CompanyAddressModel(company);
             }
 
             if (Properties.Settings.Default.LabelPrinter != null)
@@ -238,38 +246,40 @@ namespace FBAContentApp.ViewModels
         /// </summary>
         public void SaveShipmentToDB()
         {
-            //create shipment entity and set props
-            Entities.Shipment entShipment = new Shipment()
-            {
-                ShipFromCenter = this.Shipment.CompanyShipFrom,
-                ShipToCenter = this.Shipment.FullfillmentShipTo,
-                ShipmentId = this.Shipment.ShipmentID,
-                Boxes = new List<ShipmentBox>()
-                
-            };
-
-            //add each box one to entShipment entity 
-            foreach (var box in Shipment.Boxes)
-            {
-                ShipmentBox entBox = new ShipmentBox
-                {
-                    BoxContentString = box.FBALabel(),
-                    BoxId = box.BoxID,
-                    Shipment = entShipment
-                };
-
-                entShipment.Boxes.Add(entBox);
-            }
-
-            //save to the database
             using (var db = new Models.AppContext())
             {
-                if(db.Shipments.Any( s => s.ShipmentId == entShipment.ShipmentId))
+                //check if shipment exists in the database
+                if(db.Shipments.Any( s => s.ShipmentId == Shipment.ShipmentID))
                 {
-                    throw new AlreadyExistsInDBException("ShipmentID: '" + entShipment.ShipmentId + "' Already exists in the database."); 
+                    throw new AlreadyExistsInDBException("ShipmentID: '" + Shipment.ShipmentID + "' Already exists in the database."); 
                 }
                 else
                 {
+                    //create shipment entity and set props
+                    Entities.Shipment entShipment = new Shipment() {ShipmentId = Shipment.ShipmentID, Boxes = new List<ShipmentBox>() };
+
+                    //add each box one to entShipment entity 
+                    foreach (var box in Shipment.Boxes)
+                    {
+                        ShipmentBox entBox = new ShipmentBox
+                        {
+                            BoxContentString = box.FBALabel(),
+                            BoxId = box.BoxID,
+                            Shipment = entShipment
+                        };
+
+                        entShipment.Boxes.Add(entBox);
+                    }//end foreach loop
+
+                    //get amazon warehouse entity and set to ShipmentEntity
+                    AmazonWarehouse amz = db.AmazonWarehouses.Where(a => a.Id == Shipment.FullfillmentShipTo.Id).FirstOrDefault();
+                    entShipment.ShipToCenter = amz;
+
+                    //get company address entity and set to shipmententity
+                    CompanyAddress comp = db.CompanyAddresses.Where(c => c.Id == Shipment.CompanyShipFrom.Id).FirstOrDefault();
+                    entShipment.ShipFromCenter = comp;
+
+                    //add shipment to DB and save
                     db.Shipments.Add(entShipment);
                     db.SaveChanges();
                 }

@@ -52,6 +52,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -85,7 +86,9 @@
       <DependentUpon>201807122121371_Init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AmzWarehouseModel.cs" />
     <Compile Include="Models\AppContext.cs" />
+    <Compile Include="Models\CompanyAddressModel.cs" />
     <Compile Include="Models\FBABox.cs" />
     <Compile Include="Models\FBAShipment.cs" />
     <Compile Include="Models\Item.cs" />

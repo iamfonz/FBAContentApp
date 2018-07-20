@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FBAContentApp.Models;
 
 namespace FBAContentApp.Views
 {
@@ -61,15 +62,6 @@ namespace FBAContentApp.Views
             //open new window to add an Amazon Warehouse
         }
 
-        /// <summary>
-        /// Sets the Shipment.FullfillmentShipTo object to the selected item from the AmazonWarehouses ComboBox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cmbx_AmazonWhses_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ProcessShipmentVM.Shipment.FullfillmentShipTo = ProcessShipmentVM.AmzWarehouses[cmbx_AmazonWhses.SelectedIndex];
-        }
 
         /// <summary>
         /// Opens a OpenFileDialog for the user to select an Excel Workbook of a shipment.
@@ -129,16 +121,23 @@ namespace FBAContentApp.Views
         {
             if(ProcessShipmentVM.Shipment.Boxes.Count > 0)// Check that there are boxes
             {
-                if(cmbx_AmazonWhses.SelectedItem is AmazonWarehouse)//check that an Amazon Warehouse has been selected
+                if(cmbx_AmazonWhses.SelectedItem is AmzWarehouseModel)//check that an Amazon Warehouse has been selected
                 {
                     string messageString = "";
-                    // make viewModel create ZPL labels.
-                    ProcessShipmentVM.MakeBoxLabels();
+
+
                     //send them to the printer, only if a printer is configured
                     ProcessShipmentVM.LabelPrinter = "Zebra  ZP 450-200 dpi";
-                    if (ProcessShipmentVM.LabelPrinter != null)
+
+                    //set amazon fulfillment center to view model shipment
+                    ProcessShipmentVM.Shipment.FullfillmentShipTo = (AmzWarehouseModel)cmbx_AmazonWhses.SelectedItem;
+
+                    // make viewModel create ZPL labels.
+                    ProcessShipmentVM.MakeBoxLabels();
+
+                    if (ProcessShipmentVM.LabelPrinter != null) //check for a default printer.
                     {
-                        foreach (var label in ProcessShipmentVM.LabelsFactory.BoxLabels)
+                        foreach (var label in ProcessShipmentVM.LabelsFactory.BoxLabels) //send each BoxLabel to printer.
                         {
                             RawPrinterHelper.SendStringToPrinter(ProcessShipmentVM.LabelPrinter, label.ZPLCommand);
                         }
@@ -150,7 +149,7 @@ namespace FBAContentApp.Views
                             messageString += "Saved Shipment " + ProcessShipmentVM.Shipment.ShipmentID + " to database.";
                         }catch(AlreadyExistsInDBException ex)
                         {
-                            messageString += "Unable to save Shipment " + ProcessShipmentVM.Shipment.ShipmentID + " to database.";
+                            messageString += ex.Message;
                         }
                         
                         //save shipment file
@@ -195,8 +194,15 @@ namespace FBAContentApp.Views
         /// <param name="e"></param>
         private void btn_Clear_Click(object sender, RoutedEventArgs e)
         {
-            lsbx_AddedBoxes.Items.Clear();
+            //clear GUI items
+            lsbx_AddedBoxes.ItemsSource = new List<FBABox>() ;
             lsbx_AddedBoxes.Items.Refresh();
+
+            cmbx_AmazonWhses.ItemsSource = new List<AmzWarehouseModel>();
+            cmbx_AmazonWhses.ItemsSource = ProcessShipmentVM.AmzWarehouses;
+            cmbx_AmazonWhses.Items.Refresh();
+            lbl_BoxCount.Content = "0";
+            //clear view model.
             ProcessShipmentVM.ClearAll();
         }
 

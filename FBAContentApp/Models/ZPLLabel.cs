@@ -11,9 +11,9 @@ namespace FBAContentApp.Models
     {
         #region Full properties and Fields
 
-        public AmazonWarehouse AmzWarehouse { get; set; }
+        public AmzWarehouseModel AmzWarehouse { get; set; }
 
-        public CompanyAddress ShipFromAddress { get; set; }
+        public CompanyAddressModel ShipFromAddress { get; set; }
 
         public FBABox Box { get; set; }
 
@@ -33,8 +33,8 @@ namespace FBAContentApp.Models
         /// </summary>
         public ZPLLabel() : this(null, null, null)
         {
-            AmzWarehouse = new AmazonWarehouse();
-            ShipFromAddress = new CompanyAddress();
+            AmzWarehouse = new AmzWarehouseModel();
+            ShipFromAddress = new CompanyAddressModel();
             Box = new FBABox();
         }
 
@@ -43,7 +43,7 @@ namespace FBAContentApp.Models
         /// </summary>
         /// <param name="iwhse">The AMZWarehouse object that the shipment will be going to.</param>
         /// <param name="iboxes">A list of Box objects that are being shipped to Amazon.</param>
-        public ZPLLabel(AmazonWarehouse iwhse, CompanyAddress shipFromAddress, FBABox box )
+        public ZPLLabel(AmzWarehouseModel iwhse, CompanyAddressModel shipFromAddress, FBABox box )
         {
             command = "";
             AmzWarehouse = iwhse;
@@ -76,7 +76,7 @@ namespace FBAContentApp.Models
             "^FO50,125^ADN,25,10^FD"+ ShipFromAddress.CompanyName +"^FS" +
             "^FO50,145^ADN,25,10^FD"+ ShipFromAddress.AddressLine1 + "^FS" +
                  "^FO50,165^ADN,25,10^FD" + ShipFromAddress.AddressLine2 + "^FS" +
-                 "^FO50,185^ADN,25,10^FD"+ ShipFromAddress.City + ", " + ShipFromAddress.State.Abbreviation + " " + ShipFromAddress.ZipCode + "^FS" +
+                 "^FO50,185^ADN,25,10^FD"+ ShipFromAddress.City + ", " + ShipFromAddress.StateAbrv + " " + ShipFromAddress.ZipCode + "^FS" +
                  "^FO50,205^ADN,25,10^FDUnited States^FS" +
                  "^FO450,105^ADN,25,10^FDSHIP TO:^FS" +
                  "^FO450,125^ADN,25,10^FDFBA:Shoe Fitters, Inc.^FS" +
@@ -84,7 +84,7 @@ namespace FBAContentApp.Models
                  //ShipTo Amazon warehouse address
                  "^FO450,145^ADN,25,10^FD" + AmzWarehouse.Name + "^FS" +
                  "^FO450,165^ADN,25,10^FD" + AmzWarehouse.AddressLine + "^FS" +
-                 "^FO450,185^ADN,25,10^FD" + AmzWarehouse.City + ", " + AmzWarehouse.State.Abbreviation + " " + AmzWarehouse.ZipCode + "^FS" +
+                 "^FO450,185^ADN,25,10^FD" + AmzWarehouse.City + ", " + AmzWarehouse.StateAbrv + " " + AmzWarehouse.ZipCode + "^FS" +
                  "^FO450,205^ADN,25,10^FDUnited States^FS" +
                  "^FO30,235^GB700,0,8^FS" +
 

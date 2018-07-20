@@ -21,7 +21,7 @@ namespace FBAContentApp.Migrations
 
             // Add a Default company address, incase one isn't made from a user.
             context.CompanyAddresses.AddOrUpdate(x => x.Id,
-                new Entities.CompanyAddress() {Id = 0, CompanyName = "Company Name", AddressLine1 = "123 Company Address",
+                new Entities.CompanyAddress() {Id = 1, CompanyName = "Company Name", AddressLine1 = "123 Company Address",
                     City = "Albuquerque", State = context.States.Where(i => i.Id == 31).FirstOrDefault(), ZipCode = "87109"  });
 
             //Seed AmazonWarehouses with existing ones from previous DB

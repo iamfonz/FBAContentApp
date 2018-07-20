@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FBAContentApp.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -18,7 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -31,22 +31,24 @@
      <!--Ship From Company Settings-->
         <Label Content="Ship From Address" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
 
-        <ComboBox Name="comboCompanyAddress" SelectionChanged="comboCompanyAddress_Selected" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1" Margin="0,20,0,20">
+        <ComboBox Name="comboCompanyAddress" SelectionChanged="comboCompanyAddress_Selected" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Margin="10,20,10,20">
         <!-- Add DataBinding to grab all CompanyAddress from DbContext and display the company name in the listboxItem.Content-->
         </ComboBox>
 
-        <Label  Style="{StaticResource companyAddressLabel}"  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2">
+        <Label  Style="{StaticResource companyAddressLabel}"  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2">
             <TextBlock Name="txtBlockFullCompanyAddress" TextWrapping="WrapWithOverflow" >Full Ship From Company Address</TextBlock>
         </Label>
 
+        <Button Name="newShipFrbtn" Content="Add New Ship From" Click="newShipFrbtn_Click" Style="{StaticResource okaySaveBtns}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2" VerticalAlignment="Top" />
+
         <!--Default printer selections-->
         <Label Content="Label Printer"  Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3"/>
-        <ComboBox Name="comboPrinters" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="3" Margin="0,20,0,20"/>
+        <ComboBox Name="comboPrinters" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="3"  Margin="10,20,10,20"/>
 
      <!--Default SaveLocation selections-->
         <Label Content="Save File Directory" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" ToolTip="This is the directory where box content files text will be saved."/>
-        <TextBox Name="txtSaveLocation" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,20,0,20" TextWrapping="WrapWithOverflow"/>
-        <Button Content="Browse" Grid.Column="3" Grid.Row="5" VerticalAlignment="Top"/>
+        <TextBox Name="txtSaveLocation" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="4"  Margin="10,20,10,20" TextWrapping="WrapWithOverflow"/>
+        <Button Name="browseBtn" Style="{StaticResource okaySaveBtns}" Click="browseBtn_Click" Content="Browse" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5" VerticalAlignment="Top"/>
         
      <!--Okay and Cancel Buttons-->
         <Button Content="Save" Style="{StaticResource okaySaveBtns}" Click="Save_Button_Click" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"/>

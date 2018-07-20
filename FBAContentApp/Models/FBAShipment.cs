@@ -15,9 +15,9 @@ namespace FBAContentApp.Models
 
         public List<FBABox> Boxes { get; set; }
 
-        public CompanyAddress CompanyShipFrom { get; set; }
+        public CompanyAddressModel CompanyShipFrom { get; set; }
 
-        public AmazonWarehouse FullfillmentShipTo { get; set; }
+        public AmzWarehouseModel FullfillmentShipTo { get; set; }
         #endregion
 
         #region Constructors
@@ -25,13 +25,12 @@ namespace FBAContentApp.Models
         {
             ShipmentID = "";
             Boxes = new List<FBABox>();
-            CompanyShipFrom = new CompanyAddress();
-            FullfillmentShipTo = new AmazonWarehouse();
+            CompanyShipFrom = new CompanyAddressModel();
+            FullfillmentShipTo = new AmzWarehouseModel();
         }
         #endregion
 
         #region Methods
-
         /// <summary>
         /// Sorts the shipment boxes by their box number order.
         /// </summary>
