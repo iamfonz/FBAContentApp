@@ -66,8 +66,16 @@
         <Style x:Key="okaySaveBtns" TargetType="Button">
             <Setter Property="Margin" Value="20,20,20,20"/>
         </Style>
+        
+<!--STYLE settings fro NewCompanyAddressWin.XAML-->
+        <Style x:Key="compTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="10,20,10,20" />
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+        </Style>
 
         <properties:Settings x:Key="Settings"/>
+        
+        
 
     </Application.Resources>
 </Application>

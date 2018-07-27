@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FBAContentApp.Models;
+using FBAContentApp.Views.AppWindows;
 
 namespace FBAContentApp.Views
 {
@@ -60,6 +61,17 @@ namespace FBAContentApp.Views
         private void btn_AddWhse_Click(object sender, RoutedEventArgs e)
         {
             //open new window to add an Amazon Warehouse
+            AmzWarehouseModel amzwhse = new AmzWarehouseModel();
+            AmazonWarehouseWin amzWindow = new AmazonWarehouseWin(amzwhse);
+            amzWindow.ShowDialog();
+            if (amzWindow.DialogResult == true)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
 

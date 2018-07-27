@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\App.xaml
-6-1009522598
+81582119728
 
-38-878669413
+43-115174259
 22-1993709606
-MainWindow.xaml;Views\AmazonWarehouses.xaml;Views\History.xaml;Views\MainMenu.xaml;Views\NewShipment.xaml;Views\SettingsView.xaml;
+MainWindow.xaml;Views\AmazonWarehouses.xaml;Views\AppWindows\AmazonWarehouseWin.xaml;Views\AppWindows\CompanyAddressWin.xaml;Views\History.xaml;Views\MainMenu.xaml;Views\NewShipment.xaml;Views\SettingsView.xaml;
 
-True
+False
 

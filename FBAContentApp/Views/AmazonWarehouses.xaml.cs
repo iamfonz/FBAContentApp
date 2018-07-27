@@ -1,4 +1,6 @@
-﻿using FBAContentApp.Utilities;
+﻿using FBAContentApp.Models;
+using FBAContentApp.Utilities;
+using FBAContentApp.Views.AppWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,21 @@ namespace FBAContentApp.Views
         {
             Switcher.Switch(new MainMenu());
         }
+        private void addWhseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //open new window to add an Amazon Warehouse
+            AmzWarehouseModel amzwhse = new AmzWarehouseModel();
+            AmazonWarehouseWin amzWindow = new AmazonWarehouseWin(amzwhse);
+            amzWindow.ShowDialog();
+            if (amzWindow.DialogResult == true)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
 
         #endregion
 
@@ -38,6 +55,7 @@ namespace FBAContentApp.Views
         {
             throw new NotImplementedException();
         }
+
         #endregion
 
 

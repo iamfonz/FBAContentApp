@@ -18,7 +18,7 @@ using FBAContentApp.ViewModels;
 using FBAContentApp.Models;
 using Microsoft.Win32;
 using System.Windows.Interop;
-
+using FBAContentApp.Views.AppWindows;
 
 namespace FBAContentApp.Views
 {
@@ -38,24 +38,118 @@ namespace FBAContentApp.Views
         }
 
         #region Methods
+
+        /// <summary>
+        /// Populates the GUI with values from database & computer. Sets selected items to the settings saved from the application.
+        /// </summary>
         void PopulateGUI()
         {
+            //set item sources
             comboCompanyAddress.ItemsSource = settingsVM.CompanyAddresses;
             comboPrinters.ItemsSource = settingsVM.InstalledPrinters;
 
             comboPrinters.Items.Refresh();
             comboCompanyAddress.Items.Refresh();
+
+            //disable edit shipFromBtn
+            editShipFrBtn.IsEnabled = false;
+
+            //load settings.printer as selected item
+            if (settings.LabelPrinter != null)
+            {
+                //get index of the saved printer from ViewModel.Installedprinters
+                int index = settingsVM.InstalledPrinters.IndexOf(settings.LabelPrinter);
+                //set the above to the selected item in the comboBox for printers
+                comboPrinters.SelectedIndex = index;
+
+            }
+
+            //load settings.companyAddress Id as the selected item
+            if(settings.CompanyAddressId > 0)
+            {
+                //get the companyAddressModel from settingsViewModel where it's the same ID as the settings.CompAddressID
+                int compId = settings.CompanyAddressId;
+
+                //set the combo box to the result
+                comboCompanyAddress.SelectedIndex = compId-1;
+                //call selected event to change it's value
+                comboCompanyAddress_Selected(this.comboCompanyAddress, null);
+            }
+
+            if(settings.SaveFileDir != null)
+            {
+                string saveDir = settings.SaveFileDir;
+                txtSaveLocation.Text = saveDir;
+            }
+
         }
 
         #endregion
 
         #region Events
+
+        /// <summary>
+        /// Opens a new window that allows the user to add a new ShipFrom Company Address to the databse.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void newShipFrbtn_Click(object sender, RoutedEventArgs e)
         {
             //open a new window for adding a new Company Ship From.
+            CompanyAddressWin compWindow = new CompanyAddressWin();
+            compWindow.titleLabel.Content = "Add New Company Ship From";
+            compWindow.ShowDialog();
+
+            if(compWindow.DialogResult == true)   //new companyAddress successfully filled out
+            {
+                //add new companyAddress to db
+
+                // refresh items on GUI
+            }
+            else    //new companyAddress UNsuccessfully filled out
+            {
+                //inform user nothing was done.
+            }
 
         }
 
+        /// <summary>
+        /// Edits the currently selected company address.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void editShipFrBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (comboCompanyAddress.SelectedItem is CompanyAddressModel)
+            {
+                //grab selected item.
+                CompanyAddressModel companyAddress = (CompanyAddressModel)comboCompanyAddress.SelectedItem;
+                //instantiate new CompanyAddressWin.xaml and pass in selected comp address
+                CompanyAddressWin compWindow = new CompanyAddressWin(companyAddress);
+                compWindow.titleLabel.Content = "Edit Company Ship From";
+                //show the window.
+                compWindow.ShowDialog();
+
+                if(compWindow.DialogResult == true) //warehouse edit is successful
+                {
+                    //save updated warehouse to database.
+
+                    //refresh items on gui
+
+                }
+                else   //warehouse edit is unsuccessful
+                {
+                    //inform user nothing was done.
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Opens a FolderBrowserDialog box for the user to select where they would like shipment contents files to be saved.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void browseBtn_Click(object sender, RoutedEventArgs e)
         {
             string selectedPath = "";
@@ -74,6 +168,11 @@ namespace FBAContentApp.Views
         }
 
 
+        /// <summary>
+        /// Saves the settings the user has selected/input.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
             //grab all values from window
@@ -112,7 +211,11 @@ namespace FBAContentApp.Views
             
         }
 
-
+        /// <summary>
+        /// Returns the user to the MainMenu.xaml view and does not save any settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             //do nothing and return to MainMenu page
@@ -120,15 +223,22 @@ namespace FBAContentApp.Views
         }
 
 
-
+        /// <summary>
+        /// When a CompanyAddress is selected, it displays the full address for the user to view it all.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboCompanyAddress_Selected(object sender, RoutedEventArgs e)
         {
             if(comboCompanyAddress.SelectedItem is CompanyAddressModel)
             {
                 CompanyAddressModel companyAddress = settingsVM.CompanyAddresses[comboCompanyAddress.SelectedIndex];
                 txtBlockFullCompanyAddress.Text = companyAddress.CompanyName + "\n" + companyAddress.AddressLine1 + "\n" + companyAddress.AddressLine2 + "\n" + companyAddress.AddressLine3 + "\n" + companyAddress.City + ", " + companyAddress.StateAbrv + " " + companyAddress.ZipCode; ;
+
+                editShipFrBtn.IsEnabled = true;
             }
         }
+
 
 
 

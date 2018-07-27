@@ -93,14 +93,23 @@
     <Compile Include="Models\FBAShipment.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LabelFactory.cs" />
+    <Compile Include="Models\StateModel.cs" />
     <Compile Include="Models\ZPLLabel.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="Utilities\ISwitchable.cs" />
     <Compile Include="Utilities\RawPrinterHelper.cs" />
+    <Compile Include="ViewModels\AmzWarehouseViewModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\ProcessShipmentViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\AmazonWarehouses.xaml.cs">
       <DependentUpon>AmazonWarehouses.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppWindows\AmazonWarehouseWin.xaml.cs">
+      <DependentUpon>AmazonWarehouseWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppWindows\CompanyAddressWin.xaml.cs">
+      <DependentUpon>CompanyAddressWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
@@ -127,6 +136,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AmazonWarehouses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppWindows\AmazonWarehouseWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AppWindows\CompanyAddressWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
