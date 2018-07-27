@@ -39,3 +39,4 @@ C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAC
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.csproj.CopyComplete
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.exe
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.pdb
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.csprojAssemblyReference.cache

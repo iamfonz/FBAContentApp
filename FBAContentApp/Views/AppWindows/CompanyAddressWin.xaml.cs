@@ -90,19 +90,62 @@ namespace FBAContentApp.Views.AppWindows
 
 
         #endregion
-
+        /// <summary>
+        /// Validates user input for the Company Address, sets DialogResult to TRUE.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            //set dialog result to true
-            DialogResult = true;
-            //close window
-            this.Close();
+            if (ValidateInput())
+            {
+                //set dialog result to true
+                DialogResult = true;
+                //close window
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("There are some fields not filled in. Please fill fields!");
+            }
+
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             this.Close();
+        }
+
+
+        /// <summary>
+        /// Checks to make sure CompanyName, AddressLine1(for the least), City, Zip, and State are filled in.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        bool ValidateInput()
+        {
+            //check nothing is null from UI controls
+            if(txtCompAddress1.Text !=null & txtCompCity.Text != null & txtCompName.Text != null & txtZip.Text != null & comboState.SelectedItem != null)
+            {
+                CompanyAddressMod.CompanyName = txtCompName.Text;
+
+                CompanyAddressMod.AddressLine1 = txtCompAddress1.Text;
+                CompanyAddressMod.AddressLine2 = txtCompAddress2.Text;
+                CompanyAddressMod.AddressLine3 = txtCompAddress3.Text;
+
+                CompanyAddressMod.City = txtCompCity.Text;
+
+                CompanyAddressMod.ZipCode = txtZip.Text;
+
+                //get selected StateID
+                CompanyAddressMod.StateId = comboState.SelectedIndex - 1;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

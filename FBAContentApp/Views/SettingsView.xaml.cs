@@ -31,6 +31,8 @@ namespace FBAContentApp.Views
 
         SettingsViewModel settingsVM = new SettingsViewModel();
 
+        CompanyViewModel compVM = new CompanyViewModel();
+        
         public SettingsView()
         {
             InitializeComponent();
@@ -96,13 +98,36 @@ namespace FBAContentApp.Views
         private void newShipFrbtn_Click(object sender, RoutedEventArgs e)
         {
             //open a new window for adding a new Company Ship From.
-            CompanyAddressWin compWindow = new CompanyAddressWin();
+            CompanyAddressModel comp = new CompanyAddressModel();
+            CompanyAddressWin compWindow = new CompanyAddressWin(comp);
             compWindow.titleLabel.Content = "Add New Company Ship From";
             compWindow.ShowDialog();
 
             if(compWindow.DialogResult == true)   //new companyAddress successfully filled out
             {
                 //add new companyAddress to db
+                using (var db = new Models.AppContext())
+                {
+                    //instantiate new CompanyAddress entity and fill fields
+                    CompanyAddress company = new CompanyAddress()
+                    {
+                        CompanyName = comp.CompanyName,
+                        AddressLine1 = comp.AddressLine1,
+                        AddressLine2 = comp.AddressLine2,
+                        AddressLine3 = comp.AddressLine3,
+                        City = comp.City,
+                        ZipCode = comp.ZipCode,
+                        State = (State)db.States.Where(s => s.Id == comp.StateId)
+
+                    };
+
+                    //add to DB context
+                    db.CompanyAddresses.Add(company);
+
+                    //save DbContext
+                    db.SaveChanges();
+
+                }
 
                 // refresh items on GUI
             }
@@ -130,19 +155,17 @@ namespace FBAContentApp.Views
                 //show the window.
                 compWindow.ShowDialog();
 
-                if(compWindow.DialogResult == true) //warehouse edit is successful
+                if (compWindow.DialogResult == true) //warehouse edit is successful
                 {
                     //save updated warehouse to database.
-
-                    //refresh items on gui
-
+                    compVM.EditCompanyAddress();
                 }
                 else   //warehouse edit is unsuccessful
                 {
                     //inform user nothing was done.
                 }
-            }
 
+            }
         }
 
         /// <summary>
