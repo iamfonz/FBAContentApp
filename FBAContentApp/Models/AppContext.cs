@@ -23,6 +23,5 @@ namespace FBAContentApp.Models
 
         public DbSet<State> States { get; set; }
 
-
     }
 }

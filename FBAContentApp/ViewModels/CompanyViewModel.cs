@@ -10,6 +10,8 @@ namespace FBAContentApp.ViewModels
 {
     public class CompanyViewModel
     {
+       
+
         public List<StateModel> StateModels { get; set; }
 
         public CompanyAddressModel CurrentCompanyAddress { get; set; }
@@ -51,40 +53,64 @@ namespace FBAContentApp.ViewModels
             }
         }
 
+
         /// <summary>
-        /// Edits an existing CompanyAddress entity from the database.
+        /// Allows for a query to be performed on the database to a CompanyAddress Entity. 
         /// </summary>
-        /// <param name="comp"></param>
-        public void EditCompanyAddress(CompanyAddressModel companyAddress)
+        /// <param name="companyAddress">Modified CompanyAdrressModel to be passed to database.</param>
+        /// <param name="dbQuery">The type of query to be performed on the database.</param>
+        /// <returns></returns>
+        public bool CompanyAddressToDb(CompanyAddressModel companyAddress, Utilities.DbQuery dbQuery)
         {
-            //edit companyAddress to db
-            using (var db = new Models.AppContext())
+            if (companyAddress != null)
             {
-                //instantiate new CompanyAddress entity and fill fields
-                CompanyAddress company = new CompanyAddress()
+                //edit companyAddress to db
+                using (var db = new Models.AppContext())
                 {
-                    Id = companyAddress.Id,
-                    CompanyName = companyAddress.CompanyName,
-                    AddressLine1 = companyAddress.AddressLine1,
-                    AddressLine2 = companyAddress.AddressLine2,
-                    AddressLine3 = companyAddress.AddressLine3,
-                    City = companyAddress.City,
-                    ZipCode = companyAddress.ZipCode,
-                    State = (State)db.States.Where(s => s.Id == companyAddress.StateId)
+                    //instantiate new CompanyAddress entity and fill fields
+                    CompanyAddress company = new CompanyAddress()
+                    {
+                        Id = companyAddress.Id,
+                        CompanyName = companyAddress.CompanyName,
+                        AddressLine1 = companyAddress.AddressLine1,
+                        AddressLine2 = companyAddress.AddressLine2,
+                        AddressLine3 = companyAddress.AddressLine3,
+                        City = companyAddress.City,
+                        ZipCode = companyAddress.ZipCode,
+                        State = db.States.Where(s => s.Id == companyAddress.StateId).FirstOrDefault()
 
-                };
+                    };
 
-                //add edited item to DB context
-                db.Entry(company).State = System.Data.Entity.EntityState.Modified;
+                    //perform correct DB query depending on what was passed in as dbentry.
+                    switch (dbQuery)
+                    {
+                        case Utilities.DbQuery.Add:
+                            db.CompanyAddresses.Add(company);
+                            break;
+                        case Utilities.DbQuery.Edit:
+                            db.Entry(company).State = System.Data.Entity.EntityState.Modified;
+                            break;
+                        case Utilities.DbQuery.Delete:
+                            CompanyAddress compDelete = db.CompanyAddresses.Find(company.Id);
+                            db.CompanyAddresses.Remove(compDelete);
+                            break;
+                    }
 
-                //save DbContext
-                db.SaveChanges();
+                    //save DbContext
+                    db.SaveChanges();
 
-
-                //refresh items on gui
-
+                    return true;
+                }
             }
+            else
+            {
+                return false;
+            }
+
+            
+
         }
+
 
     }
 }

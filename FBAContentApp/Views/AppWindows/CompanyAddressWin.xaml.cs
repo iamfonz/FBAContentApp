@@ -31,6 +31,8 @@ namespace FBAContentApp.Views.AppWindows
 
         public CompanyViewModel compVM { get; set; }
 
+        public Utilities.DbQuery DbQuery { get; set; }
+
 
         #region Constructors
 
@@ -38,11 +40,12 @@ namespace FBAContentApp.Views.AppWindows
         /// Overloaded constructor for editing an existing company address.
         /// </summary>
         /// <param name="comp"></param>
-        public CompanyAddressWin(CompanyAddressModel comp)
+        public CompanyAddressWin(CompanyAddressModel comp, Utilities.DbQuery dbQuery)
         {
             InitializeComponent();
             compAddress = comp;
             compVM = new CompanyViewModel(compAddress);
+            DbQuery = dbQuery;
             PopulateGUI();
 
         }
@@ -50,7 +53,7 @@ namespace FBAContentApp.Views.AppWindows
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public CompanyAddressWin():this(new CompanyAddressModel())
+        public CompanyAddressWin():this(new CompanyAddressModel(), Utilities.DbQuery.Add)
         {
 
         }
@@ -99,10 +102,20 @@ namespace FBAContentApp.Views.AppWindows
         {
             if (ValidateInput())
             {
-                //set dialog result to true
-                DialogResult = true;
-                //close window
-                this.Close();
+                if(compVM.CompanyAddressToDb(CompanyAddressMod, DbQuery))
+                {
+                    //set dialog result to true
+                    DialogResult = true;
+                    //close window
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Unable to save Company Address to database.");
+                    DialogResult = false;
+                    this.Close();
+                }                
+                
             }
             else
             {
@@ -138,7 +151,7 @@ namespace FBAContentApp.Views.AppWindows
                 CompanyAddressMod.ZipCode = txtZip.Text;
 
                 //get selected StateID
-                CompanyAddressMod.StateId = comboState.SelectedIndex - 1;
+                CompanyAddressMod.StateId = comboState.SelectedIndex+1;
 
                 return true;
             }

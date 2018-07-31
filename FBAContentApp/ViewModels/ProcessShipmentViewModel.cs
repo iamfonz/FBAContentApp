@@ -200,10 +200,10 @@ namespace FBAContentApp.ViewModels
         private void PopulateAmazonWarehouse()
         {
             using (var db = new Models.AppContext())
-            {  
+            {
                 List<AmazonWarehouse> warehousees = db.AmazonWarehouses.Include(s => s.State).ToList();
 
-                foreach(AmazonWarehouse amz in warehousees)
+                foreach (AmazonWarehouse amz in warehousees)
                 {
                     AmzWarehouseModel amzModel = new AmzWarehouseModel(amz);
                     AmzWarehouses.Add(amzModel);
@@ -242,47 +242,50 @@ namespace FBAContentApp.ViewModels
         }
 
         /// <summary>
-        /// Saves the shipment data to the Database.
+        /// Saves the shipment data to the Database. If it exists in DB, it is edited; else it's added.
         /// </summary>
         public void SaveShipmentToDB()
         {
             using (var db = new Models.AppContext())
             {
-                //check if shipment exists in the database
-                if(db.Shipments.Any( s => s.ShipmentId == Shipment.ShipmentID))
+                //create shipment entity and set props
+                Entities.Shipment entShipment = new Shipment() { ShipmentId = Shipment.ShipmentID, Boxes = new List<ShipmentBox>() };
+
+                //add each box one to entShipment entity 
+                foreach (var box in Shipment.Boxes)
                 {
-                    throw new AlreadyExistsInDBException("ShipmentID: '" + Shipment.ShipmentID + "' Already exists in the database."); 
+                    ShipmentBox entBox = new ShipmentBox
+                    {
+                        BoxContentString = box.FBALabel(),
+                        BoxId = box.BoxID,
+                        Shipment = entShipment
+                    };
+
+                    entShipment.Boxes.Add(entBox);
+                }//end foreach loop
+
+                //get amazon warehouse entity and set to ShipmentEntity
+                AmazonWarehouse amz = db.AmazonWarehouses.Where(a => a.Id == Shipment.FullfillmentShipTo.Id).FirstOrDefault();
+                entShipment.ShipToCenter = amz;
+
+                //get company address entity and set to shipmententity
+                CompanyAddress comp = db.CompanyAddresses.Where(c => c.Id == Shipment.CompanyShipFrom.Id).FirstOrDefault();
+                entShipment.ShipFromCenter = comp;
+
+                //check if shipment exists in the database
+                if (db.Shipments.Any(s => s.ShipmentId == Shipment.ShipmentID))
+                {
+                    db.Entry(entShipment).State = EntityState.Modified;
                 }
                 else
                 {
-                    //create shipment entity and set props
-                    Entities.Shipment entShipment = new Shipment() {ShipmentId = Shipment.ShipmentID, Boxes = new List<ShipmentBox>() };
-
-                    //add each box one to entShipment entity 
-                    foreach (var box in Shipment.Boxes)
-                    {
-                        ShipmentBox entBox = new ShipmentBox
-                        {
-                            BoxContentString = box.FBALabel(),
-                            BoxId = box.BoxID,
-                            Shipment = entShipment
-                        };
-
-                        entShipment.Boxes.Add(entBox);
-                    }//end foreach loop
-
-                    //get amazon warehouse entity and set to ShipmentEntity
-                    AmazonWarehouse amz = db.AmazonWarehouses.Where(a => a.Id == Shipment.FullfillmentShipTo.Id).FirstOrDefault();
-                    entShipment.ShipToCenter = amz;
-
-                    //get company address entity and set to shipmententity
-                    CompanyAddress comp = db.CompanyAddresses.Where(c => c.Id == Shipment.CompanyShipFrom.Id).FirstOrDefault();
-                    entShipment.ShipFromCenter = comp;
-
                     //add shipment to DB and save
                     db.Shipments.Add(entShipment);
-                    db.SaveChanges();
                 }
+
+
+                db.SaveChanges();
+
             }
 
 
@@ -290,7 +293,7 @@ namespace FBAContentApp.ViewModels
 
         /// <summary>
         /// Saves the shipment information to the current directory or the specified save file directory
-        /// in settings, if the user has set one.
+        /// in settings, if the user has set one. May throw an exception if unable to save file to the directory.
         /// </summary>
         public void SaveShipmentToFile()
         {

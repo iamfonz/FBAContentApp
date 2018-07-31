@@ -30,8 +30,6 @@ namespace FBAContentApp.Views
         Properties.Settings settings = new Properties.Settings();
 
         SettingsViewModel settingsVM = new SettingsViewModel();
-
-        CompanyViewModel compVM = new CompanyViewModel();
         
         public SettingsView()
         {
@@ -46,6 +44,9 @@ namespace FBAContentApp.Views
         /// </summary>
         void PopulateGUI()
         {
+            settingsVM = new SettingsViewModel();
+            settings = new Properties.Settings();
+
             //set item sources
             comboCompanyAddress.ItemsSource = settingsVM.CompanyAddresses;
             comboPrinters.ItemsSource = settingsVM.InstalledPrinters;
@@ -53,8 +54,9 @@ namespace FBAContentApp.Views
             comboPrinters.Items.Refresh();
             comboCompanyAddress.Items.Refresh();
 
-            //disable edit shipFromBtn
+            //disable edit and delete shipFromBtn
             editShipFrBtn.IsEnabled = false;
+            deleteShipFrBtn.IsEnabled = false;
 
             //load settings.printer as selected item
             if (settings.LabelPrinter != null)
@@ -72,8 +74,11 @@ namespace FBAContentApp.Views
                 //get the companyAddressModel from settingsViewModel where it's the same ID as the settings.CompAddressID
                 int compId = settings.CompanyAddressId;
 
+                int index = settingsVM.CompanyAddresses.FindIndex(c => c.Id == compId);
+
                 //set the combo box to the result
-                comboCompanyAddress.SelectedIndex = compId-1;
+                comboCompanyAddress.SelectedIndex = index;
+
                 //call selected event to change it's value
                 comboCompanyAddress_Selected(this.comboCompanyAddress, null);
             }
@@ -99,41 +104,20 @@ namespace FBAContentApp.Views
         {
             //open a new window for adding a new Company Ship From.
             CompanyAddressModel comp = new CompanyAddressModel();
-            CompanyAddressWin compWindow = new CompanyAddressWin(comp);
+            CompanyAddressWin compWindow = new CompanyAddressWin(comp, Utilities.DbQuery.Add);
             compWindow.titleLabel.Content = "Add New Company Ship From";
             compWindow.ShowDialog();
 
-            if(compWindow.DialogResult == true)   //new companyAddress successfully filled out
+            if (compWindow.DialogResult == true)
             {
-                //add new companyAddress to db
-                using (var db = new Models.AppContext())
-                {
-                    //instantiate new CompanyAddress entity and fill fields
-                    CompanyAddress company = new CompanyAddress()
-                    {
-                        CompanyName = comp.CompanyName,
-                        AddressLine1 = comp.AddressLine1,
-                        AddressLine2 = comp.AddressLine2,
-                        AddressLine3 = comp.AddressLine3,
-                        City = comp.City,
-                        ZipCode = comp.ZipCode,
-                        State = (State)db.States.Where(s => s.Id == comp.StateId)
-
-                    };
-
-                    //add to DB context
-                    db.CompanyAddresses.Add(company);
-
-                    //save DbContext
-                    db.SaveChanges();
-
-                }
-
-                // refresh items on GUI
+                //save updated warehouse to database.
+                MessageBox.Show("Company Address successfully saved.");
+                PopulateGUI();
             }
-            else    //new companyAddress UNsuccessfully filled out
+            else
             {
                 //inform user nothing was done.
+                MessageBox.Show("Unable to save the Company Address.");
             }
 
         }
@@ -150,7 +134,7 @@ namespace FBAContentApp.Views
                 //grab selected item.
                 CompanyAddressModel companyAddress = (CompanyAddressModel)comboCompanyAddress.SelectedItem;
                 //instantiate new CompanyAddressWin.xaml and pass in selected comp address
-                CompanyAddressWin compWindow = new CompanyAddressWin(companyAddress);
+                CompanyAddressWin compWindow = new CompanyAddressWin(companyAddress, Utilities.DbQuery.Edit);
                 compWindow.titleLabel.Content = "Edit Company Ship From";
                 //show the window.
                 compWindow.ShowDialog();
@@ -158,14 +142,37 @@ namespace FBAContentApp.Views
                 if (compWindow.DialogResult == true) //warehouse edit is successful
                 {
                     //save updated warehouse to database.
-                    compVM.EditCompanyAddress();
+                    MessageBox.Show("Company Address successfully saved.");
+                    PopulateGUI();
                 }
                 else   //warehouse edit is unsuccessful
                 {
                     //inform user nothing was done.
+                    MessageBox.Show("Unable to save the Company Address.");
                 }
 
             }
+        }
+
+        /// <summary>
+        /// Deletes the currently selected company address.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteShipFrBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //grab selected item.
+            CompanyAddressModel companyAddress = (CompanyAddressModel)comboCompanyAddress.SelectedItem;
+            CompanyViewModel compVm = new CompanyViewModel(companyAddress);
+            if(compVm.CompanyAddressToDb(companyAddress, Utilities.DbQuery.Delete))
+            {
+                MessageBox.Show(companyAddress.CompanyName + " ship from address successfully deleted.");
+            }
+            else
+            {
+                MessageBox.Show("Unable to delete" + companyAddress.CompanyName + " ship from address.");
+            }
+
         }
 
         /// <summary>
@@ -247,7 +254,7 @@ namespace FBAContentApp.Views
 
 
         /// <summary>
-        /// When a CompanyAddress is selected, it displays the full address for the user to view it all.
+        /// When a CompanyAddress is selected, it displays the full address for the user to view it all, and enables the deletion and editing of the selected address.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -259,6 +266,7 @@ namespace FBAContentApp.Views
                 txtBlockFullCompanyAddress.Text = companyAddress.CompanyName + "\n" + companyAddress.AddressLine1 + "\n" + companyAddress.AddressLine2 + "\n" + companyAddress.AddressLine3 + "\n" + companyAddress.City + ", " + companyAddress.StateAbrv + " " + companyAddress.ZipCode; ;
 
                 editShipFrBtn.IsEnabled = true;
+                deleteShipFrBtn.IsEnabled = true;
             }
         }
 
@@ -266,8 +274,8 @@ namespace FBAContentApp.Views
 
 
 
-        #endregion
 
+        #endregion
 
     }
 }

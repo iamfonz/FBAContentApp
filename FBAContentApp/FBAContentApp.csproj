@@ -97,6 +97,7 @@
     <Compile Include="Models\ZPLLabel.cs" />
     <Compile Include="Switcher.cs" />
     <Compile Include="Utilities\ISwitchable.cs" />
+    <Compile Include="Utilities\MyUtities.cs" />
     <Compile Include="Utilities\RawPrinterHelper.cs" />
     <Compile Include="ViewModels\AmzWarehouseViewModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />

@@ -34,15 +34,22 @@ namespace FBAContentApp.Views
         {
             InitializeComponent();
 
+            PopulateGUI();
+
+        }
+
+        #region Methods
+
+        void PopulateGUI()
+        {
             //initialize a ProcessShipmentViewModel
             ProcessShipmentVM = new ProcessShipmentViewModel();
 
             //set the items in the AmazonWarehouse listbox
             cmbx_AmazonWhses.ItemsSource = ProcessShipmentVM.AmzWarehouses;
+            cmbx_AmazonWhses.Items.Refresh();
 
         }
-
-        #region Methods
 
         #endregion
 
@@ -138,9 +145,6 @@ namespace FBAContentApp.Views
                     string messageString = "";
 
 
-                    //send them to the printer, only if a printer is configured
-                    ProcessShipmentVM.LabelPrinter = "Zebra  ZP 450-200 dpi";
-
                     //set amazon fulfillment center to view model shipment
                     ProcessShipmentVM.Shipment.FullfillmentShipTo = (AmzWarehouseModel)cmbx_AmazonWhses.SelectedItem;
 
@@ -177,6 +181,9 @@ namespace FBAContentApp.Views
 
                         //show dialogbox that it was processed successfully
                         MessageBox.Show(messageString);
+
+                        //reinitialize GUI
+                        PopulateGUI();
                     }
                     else
                     {
@@ -195,7 +202,7 @@ namespace FBAContentApp.Views
                 MessageBox.Show("There are no boxes loaded into the shipment! Clicl 'Add Boxes' and select and Excel Workbook that contains box content.");
             }
 
-            //showDialog boxes informing user of what's missing.
+          
 
         }
 
