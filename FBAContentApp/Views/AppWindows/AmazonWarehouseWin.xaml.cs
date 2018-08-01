@@ -32,15 +32,17 @@ namespace FBAContentApp.Views.AppWindows
 
         public AmzWarehouseViewModel amzWarehouseVM { get; set; }
 
+        public Utilities.DbQuery DbQuery { get; set; }
         #endregion
 
         #region Constructors
 
-        public AmazonWarehouseWin(AmzWarehouseModel warehouseModel)
+        public AmazonWarehouseWin(AmzWarehouseModel warehouseModel, Utilities.DbQuery dbQuery)
         {
             InitializeComponent();
             amzWarehouse = warehouseModel;
             amzWarehouseVM = new AmzWarehouseViewModel(warehouseModel);
+            DbQuery = dbQuery;
             PopulateGUI();
 
         }
@@ -48,7 +50,7 @@ namespace FBAContentApp.Views.AppWindows
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AmazonWarehouseWin() : this(new AmzWarehouseModel())
+        public AmazonWarehouseWin() : this(new AmzWarehouseModel(), Utilities.DbQuery.Add)
         {
 
         }
@@ -66,6 +68,7 @@ namespace FBAContentApp.Views.AppWindows
             txtCity.Text = amzWarehouseVM.CurrentAmazonWhse.City;
             txtZip.Text = amzWarehouseVM.CurrentAmazonWhse.ZipCode;
             comboState.ItemsSource = amzWarehouseVM.StateModels;
+
             if (amzWarehouseVM.CurrentAmazonWhse.StateAbrv != null)
             {
                 comboState.SelectedIndex = amzWarehouseVM.CurrentAmazonWhse.StateId - 1;
@@ -75,17 +78,69 @@ namespace FBAContentApp.Views.AppWindows
 
         }
 
+        /// <summary>
+        /// Checks to make sure AmazonWarehouseModel, AddressLine1(for the least), City, Zip, and State are filled in.
+        /// </summary>
+        /// <returns>Bool</returns>
+        bool ValidateInput()
+        {
+            //check nothing is null from UI controls
+            if (txtWhseID.Text != "" & txtAddressLine.Text != "" & txtCity.Text != "" & txtCompName.Text != "" & txtZip.Text != "" & comboState.SelectedItem != null)
+            {
+
+                AmzWarehouse.WarehouseCode = txtWhseID.Text;
+
+                AmzWarehouse.Name = txtCompName.Text;
+
+                AmzWarehouse.AddressLine = txtAddressLine.Text;
+                AmzWarehouse.City = txtCity.Text;
+
+                AmzWarehouse.ZipCode = txtZip.Text;
+
+                //get selected StateID
+                AmzWarehouse.StateId = comboState.SelectedIndex + 1;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
 
 
         #region Events
+        /// <summary>
+        /// Event from 'Save' button that verifies required fields have been entered, then submits to DB.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            //validate user input
-            //set dialog result
-            this.DialogResult = true;
-            //close this window
-            this.Close();
+
+            if (ValidateInput()) //if the required items have been input
+            {
+                if (amzWarehouseVM.AmzWarehouseDbQuery(AmzWarehouse, DbQuery)) //call method to query database.
+                {
+                    //set dialog result to true
+                    DialogResult = true;
+                    //close window
+                    this.Close();
+                }
+                else //if the quert is unsuccessful
+                {
+                    MessageBox.Show("Unable to save the Amazon Fullfillment Center to database.", "Unsuccessful save to DB.");
+                    DialogResult = false;
+                    this.Close();
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("There are some fields not filled in. Please fill fields!", "Required Fields Missing!");
+            }
 
         }
 

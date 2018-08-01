@@ -163,6 +163,8 @@ namespace FBAContentApp.Views
         {
             //grab selected item.
             CompanyAddressModel companyAddress = (CompanyAddressModel)comboCompanyAddress.SelectedItem;
+
+            //companyviewModel to Delete item.
             CompanyViewModel compVm = new CompanyViewModel(companyAddress);
             if(compVm.CompanyAddressToDb(companyAddress, Utilities.DbQuery.Delete))
             {

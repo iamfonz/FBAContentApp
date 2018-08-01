@@ -12,6 +12,8 @@ namespace FBAContentApp.ViewModels
     {
         public List<StateModel> StateModels { get; set; }
 
+        public List<AmzWarehouseModel> FulFillmentCenters { get; set; }
+
         public AmzWarehouseModel CurrentAmazonWhse { get; set; }
 
         /// <summary>
@@ -21,6 +23,7 @@ namespace FBAContentApp.ViewModels
         public AmzWarehouseViewModel(AmzWarehouseModel amzWhse)
         {
             StateModels = new List<StateModel>();
+            FulFillmentCenters = new List<AmzWarehouseModel>();
             CurrentAmazonWhse = amzWhse;
 
             PopulateLists();
@@ -35,20 +38,88 @@ namespace FBAContentApp.ViewModels
         }
 
         /// <summary>
-        /// Populates the StateModels list for the UI combo box control.
+        /// Populates the StateModels and FullfillmentCenters list for the UI.
         /// </summary>
         private void PopulateLists()
         {
-            //populate stateModels property
             using (var db = new Models.AppContext())
             {
+                //populate states
                 List<State> dbStates = db.States.ToList();
 
                 foreach (State state in dbStates)
                 {
                     StateModels.Add(new StateModel(state));
                 }
+
+                //populate fullfillment centers
+                List<AmazonWarehouse> amazonWarehouses = db.AmazonWarehouses.ToList();
+                amazonWarehouses.OrderByDescending(i => i.WarehouseCode);
+
+                foreach(AmazonWarehouse amz in amazonWarehouses)
+                {
+                    FulFillmentCenters.Add(new AmzWarehouseModel(amz));
+                }
+
+                //sort fullfillment centers by WarehouseID
+                FulFillmentCenters.OrderByDescending(i => i.WarehouseCode);
             }
+        }
+
+
+        /// <summary>
+        /// Allows for a query to be performed on the database to an AmazonWarehouse Entity. 
+        /// </summary>
+        /// <param name="amzWarehouse">AmazonWarehouse entity to be passed to database.</param>
+        /// <param name="dbQuery">The type of query to be performed on the database.</param>
+        /// <returns>If successfully added to Db return True. </returns>
+        public bool AmzWarehouseDbQuery(AmzWarehouseModel amzWarehouse, Utilities.DbQuery dbQuery)
+        {
+            if (amzWarehouse != null)
+            {
+                using (var db = new Models.AppContext())
+                {
+                    //instantiate new AmazonWarehouse entity and fill fields
+                    AmazonWarehouse amazon = new AmazonWarehouse()
+                    {
+                        Id = amzWarehouse.Id,
+                        WarehouseCode = amzWarehouse.WarehouseCode,
+                        Name = amzWarehouse.Name,
+                        AddressLine = amzWarehouse.AddressLine,
+                        City = amzWarehouse.City,
+                        ZipCode = amzWarehouse.ZipCode,
+                        State = db.States.Where(s => s.Id == amzWarehouse.StateId).FirstOrDefault()
+
+                    };
+
+                    //perform correct DB query depending on what was passed in as dbentry.
+                    switch (dbQuery)
+                    {
+                        case Utilities.DbQuery.Add:
+                            db.AmazonWarehouses.Add(amazon);
+                            break;
+                        case Utilities.DbQuery.Edit:
+                            db.Entry(amazon).State = System.Data.Entity.EntityState.Modified;
+                            break;
+                        case Utilities.DbQuery.Delete:
+                            AmazonWarehouse compDelete = db.AmazonWarehouses.Find(amazon.Id);
+                            db.AmazonWarehouses.Remove(compDelete);
+                            break;
+                    }
+
+                    //save DbContext
+                    db.SaveChanges();
+
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+
+
         }
     }
 }

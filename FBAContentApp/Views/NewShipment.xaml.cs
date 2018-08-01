@@ -69,7 +69,7 @@ namespace FBAContentApp.Views
         {
             //open new window to add an Amazon Warehouse
             AmzWarehouseModel amzwhse = new AmzWarehouseModel();
-            AmazonWarehouseWin amzWindow = new AmazonWarehouseWin(amzwhse);
+            AmazonWarehouseWin amzWindow = new AmazonWarehouseWin(amzwhse, DbQuery.Add);
             amzWindow.ShowDialog();
             if (amzWindow.DialogResult == true)
             {

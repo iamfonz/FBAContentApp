@@ -20,16 +20,21 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             
         </Grid.RowDefinitions>
 
         <Label Content="Amazon Fulfillment Centers" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0"/>
 
-        <ListBox Name="CentersListBox" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="3"/>
+        <ListBox Name="CentersListBox" SelectionChanged="CentersListBox_Selected" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="3"/>
 
-        <Button x:Name="addWhseBtn" Click="addWhseBtn_Click" Content="Add a Warehouse" Style="{StaticResource ShipmentButtonsStyle}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4"/>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="4">
+            <Button x:Name="addWhseBtn" Click="addWhseBtn_Click" Content="Add" Style="{StaticResource amzwhseButton}" />
+            <Button x:Name="editWhseBtn" Click="editWhseBtn_Click" Content="Edit" Style="{StaticResource amzwhseButton}" />
+            <Button x:Name="deleteWhseBtn" Click="deleteWhseBtn_Click" Content="Delete" Style="{StaticResource amzwhseButton}" />
+        </WrapPanel>
+        
 
         <Button Content="Back To Main Menu" Style="{StaticResource BackToMenuBtn}" Click="BackToMain_Button_Click" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5"/>
 

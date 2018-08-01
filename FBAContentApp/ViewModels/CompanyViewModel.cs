@@ -59,7 +59,7 @@ namespace FBAContentApp.ViewModels
         /// </summary>
         /// <param name="companyAddress">Modified CompanyAdrressModel to be passed to database.</param>
         /// <param name="dbQuery">The type of query to be performed on the database.</param>
-        /// <returns></returns>
+        /// <returns>If successfully added to Db return True. </returns>
         public bool CompanyAddressToDb(CompanyAddressModel companyAddress, Utilities.DbQuery dbQuery)
         {
             if (companyAddress != null)

@@ -87,12 +87,43 @@ namespace FBAContentApp.Views.AppWindows
             txtZip.Text = compAddress.ZipCode;
 
         }
+
+        /// <summary>
+        /// Checks to make sure CompanyName, AddressLine1(for the least), City, Zip, and State are filled in.
+        /// </summary>
+        /// <returns>Boolean</returns>
+        bool ValidateInput()
+        {
+            //check nothing is null from UI controls
+            if (txtCompAddress1.Text != null & txtCompCity.Text != null & txtCompName.Text != null & txtZip.Text != null & comboState.SelectedItem != null)
+            {
+                CompanyAddressMod.CompanyName = txtCompName.Text;
+
+                CompanyAddressMod.AddressLine1 = txtCompAddress1.Text;
+                CompanyAddressMod.AddressLine2 = txtCompAddress2.Text;
+                CompanyAddressMod.AddressLine3 = txtCompAddress3.Text;
+
+                CompanyAddressMod.City = txtCompCity.Text;
+
+                CompanyAddressMod.ZipCode = txtZip.Text;
+
+                //get selected StateID
+                CompanyAddressMod.StateId = comboState.SelectedIndex + 1;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
+
+
 
         #region Events
 
-
-        #endregion
         /// <summary>
         /// Validates user input for the Company Address, sets DialogResult to TRUE.
         /// </summary>
@@ -130,35 +161,7 @@ namespace FBAContentApp.Views.AppWindows
             this.Close();
         }
 
+        #endregion
 
-        /// <summary>
-        /// Checks to make sure CompanyName, AddressLine1(for the least), City, Zip, and State are filled in.
-        /// </summary>
-        /// <returns>Boolean</returns>
-        bool ValidateInput()
-        {
-            //check nothing is null from UI controls
-            if(txtCompAddress1.Text !=null & txtCompCity.Text != null & txtCompName.Text != null & txtZip.Text != null & comboState.SelectedItem != null)
-            {
-                CompanyAddressMod.CompanyName = txtCompName.Text;
-
-                CompanyAddressMod.AddressLine1 = txtCompAddress1.Text;
-                CompanyAddressMod.AddressLine2 = txtCompAddress2.Text;
-                CompanyAddressMod.AddressLine3 = txtCompAddress3.Text;
-
-                CompanyAddressMod.City = txtCompCity.Text;
-
-                CompanyAddressMod.ZipCode = txtZip.Text;
-
-                //get selected StateID
-                CompanyAddressMod.StateId = comboState.SelectedIndex+1;
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

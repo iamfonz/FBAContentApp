@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FBAContentApp.Views.AppWindows"
         mc:Ignorable="d"
-        Title="Company Address" Height="680" Width="600">
+        Title="Company Address" Height="640" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
