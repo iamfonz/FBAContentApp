@@ -16,6 +16,8 @@ namespace FBAContentApp.Entities
         [Key]
         public string ShipmentId { get; set; }
 
+        public DateTime ShipmentDate { get; set; }
+
         public virtual AmazonWarehouse ShipToCenter { get; set; }
 
         public virtual CompanyAddress ShipFromCenter { get; set; }

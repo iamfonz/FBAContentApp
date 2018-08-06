@@ -40,3 +40,4 @@ C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAC
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.exe
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.pdb
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.csprojAssemblyReference.cache
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.Migrations.Init3.resources

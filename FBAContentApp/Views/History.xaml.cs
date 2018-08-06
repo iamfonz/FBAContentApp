@@ -1,6 +1,10 @@
-﻿using FBAContentApp.Utilities;
+﻿using FBAContentApp.Entities;
+using FBAContentApp.Models;
+using FBAContentApp.Utilities;
+using FBAContentApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +24,47 @@ namespace FBAContentApp.Views
     /// Interaction logic for History.xaml
     /// </summary>
     public partial class History : UserControl, ISwitchable
+
     {
+
+        private ObservableCollection<FBAShipment> fbaShipments = new ObservableCollection<FBAShipment>();
+
+        public ObservableCollection<FBAShipment> FBAShipments
+        {
+            get { return fbaShipments; }
+            set { fbaShipments = value; }
+        }
+
+        private HistoryViewModel historyViewModel = new HistoryViewModel();
+
+        #region Constructor
         public History()
         {
             InitializeComponent();
+            PopulateShipments();
         }
+
+        #endregion
+
+        #region Methods
+        private void PopulateShipments()
+        {
+            FBAShipments = historyViewModel.FBAShipments;
+
+            DataContext = new
+            {
+                Shipments = FBAShipments
+            };
+
+            
+        }
+
+
+        #endregion
+
+
+
+
         #region Events
         private void BackToMain_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -32,6 +72,8 @@ namespace FBAContentApp.Views
         }
 
         #endregion
+
+
 
 
         #region ISwitchable Implementation

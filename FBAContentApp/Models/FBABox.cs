@@ -46,6 +46,15 @@ namespace FBAContentApp.Models
 
         }
 
+        private string contentString;
+
+        public string ContentString
+        {
+            get { return contentString; }
+            set { contentString = value; }
+        }
+
+
 
         #endregion
 

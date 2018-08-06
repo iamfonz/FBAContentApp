@@ -54,15 +54,15 @@ namespace FBAContentApp.ViewModels
 
                 //populate fullfillment centers
                 List<AmazonWarehouse> amazonWarehouses = db.AmazonWarehouses.ToList();
-                amazonWarehouses.OrderByDescending(i => i.WarehouseCode);
+                amazonWarehouses.OrderBy(i => i.WarehouseCode);
 
                 foreach(AmazonWarehouse amz in amazonWarehouses)
                 {
                     FulFillmentCenters.Add(new AmzWarehouseModel(amz));
                 }
 
-                //sort fullfillment centers by WarehouseID
-                FulFillmentCenters.OrderByDescending(i => i.WarehouseCode);
+                //sort fullfillment centers by WarehouseIDgit do    
+                FulFillmentCenters.OrderBy(i => i.WarehouseCode);
             }
         }
 

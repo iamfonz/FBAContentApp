@@ -5,29 +5,83 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace FBAContentApp.Models
 {
-    public class FBAShipment
+    public class FBAShipment : INotifyPropertyChanged
     {
         #region Properties
-        public string ShipmentID { get; set; }
 
-        public List<FBABox> Boxes { get; set; }
+        private string shipmentId;
 
-        public CompanyAddressModel CompanyShipFrom { get; set; }
+        public string ShipmentID
+        {
+            get { return shipmentId; }
+            set {
+                shipmentId = value;
+                OnPropertyChanged("ShipmentID");
+            }
 
-        public AmzWarehouseModel FullfillmentShipTo { get; set; }
+        }
+
+        private DateTime shipmentDate;
+
+        public DateTime ShipmentDate
+        {
+            get { return shipmentDate; }
+            set {
+                shipmentDate = value;
+                OnPropertyChanged("ShipmentDate");
+            }
+        }
+
+
+        private List<FBABox> boxes;
+
+        public List<FBABox> Boxes
+        {
+            get { return boxes; }
+            set {
+                boxes = value;
+                OnPropertyChanged("Boxes");
+            }
+        }
+
+        private CompanyAddressModel companyShipFrom;
+
+        public CompanyAddressModel CompanyShipFrom
+        {
+            get { return companyShipFrom; }
+            set {
+                companyShipFrom = value;
+                OnPropertyChanged("CompanyShipFrom");
+            }
+        }
+
+        private AmzWarehouseModel amzWarehouse;
+
+        public AmzWarehouseModel FullfillmentShipTo
+        {
+            get { return amzWarehouse; }
+            set {
+                amzWarehouse = value;
+                OnPropertyChanged("FullfillmentShipTo");
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
         #region Constructors
         public FBAShipment()
         {
-            ShipmentID = "";
-            Boxes = new List<FBABox>();
-            CompanyShipFrom = new CompanyAddressModel();
-            FullfillmentShipTo = new AmzWarehouseModel();
+            shipmentId = "";
+            boxes = new List<FBABox>();
+            companyShipFrom = new CompanyAddressModel();
+            amzWarehouse = new AmzWarehouseModel();
+            shipmentDate = DateTime.Now;
         }
+        
         #endregion
 
         #region Methods
@@ -61,7 +115,13 @@ namespace FBAContentApp.Models
             return JsonConvert.SerializeObject(this);
         }
 
-
+        protected void OnPropertyChanged(string name)
+        {
+            if(PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
         #endregion
 
 
