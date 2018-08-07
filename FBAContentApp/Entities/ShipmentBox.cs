@@ -15,6 +15,8 @@ namespace FBAContentApp.Entities
         [Key]
         public string BoxId { get; set; }
 
+        public int BoxNumber { get; set; }
+
         public virtual Shipment Shipment{ get; set; }
 
         public string BoxContentString { get; set; }

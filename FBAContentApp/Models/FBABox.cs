@@ -126,20 +126,33 @@ namespace FBAContentApp.Models
         /// <returns>Returns formatted string for Amazon's 2d Barcode requirements</returns>
         public string FBALabel()
         {
-            string format = "AMZN,PO:" + po + ",";
-            for(int i = 0; i < contents.Count; i++)
+            if (contentString != null)
             {
-                if (i != (contents.Count - 1))
-                {
-                    format += contents[i].ToString() + ",";
-                }
-                else
-                {
-                    format += contents[i].ToString();
-                }
+                return contentString;
             }
 
-            return format;
+            else
+            {
+
+
+
+                string format = "AMZN,PO:" + po + ",";
+                for (int i = 0; i < contents.Count; i++)
+                {
+                    if (i != (contents.Count - 1))
+                    {
+                        format += contents[i].ToString() + ",";
+                    }
+                    else
+                    {
+                        format += contents[i].ToString();
+                    }
+                }
+
+                contentString = format;
+
+                return contentString;
+            }
         }
         #endregion
     }

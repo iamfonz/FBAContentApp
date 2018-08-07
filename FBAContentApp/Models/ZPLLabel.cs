@@ -78,10 +78,10 @@ namespace FBAContentApp.Models
                  "^FO50,165^ADN,25,10^FD" + ShipFromAddress.AddressLine2 + "^FS" +
                  "^FO50,185^ADN,25,10^FD"+ ShipFromAddress.City + ", " + ShipFromAddress.StateAbrv + " " + ShipFromAddress.ZipCode + "^FS" +
                  "^FO50,205^ADN,25,10^FDUnited States^FS" +
-                 "^FO450,105^ADN,25,10^FDSHIP TO:^FS" +
-                 "^FO450,125^ADN,25,10^FDFBA:Shoe Fitters, Inc.^FS" +
 
                  //ShipTo Amazon warehouse address
+                 "^FO450,105^ADN,25,10^FDSHIP TO:^FS" +
+                 "^FO450,125^ADN,25,10^FD"+ ShipFromAddress.LegalEntityName+"^FS" +
                  "^FO450,145^ADN,25,10^FD" + AmzWarehouse.Name + "^FS" +
                  "^FO450,165^ADN,25,10^FD" + AmzWarehouse.AddressLine + "^FS" +
                  "^FO450,185^ADN,25,10^FD" + AmzWarehouse.City + ", " + AmzWarehouse.StateAbrv + " " + AmzWarehouse.ZipCode + "^FS" +

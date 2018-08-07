@@ -11,7 +11,7 @@ namespace FBAContentApp.Models
 {
     public class FBAShipment : INotifyPropertyChanged
     {
-        #region Properties
+        #region Full Properties and Fields
 
         private string shipmentId;
 

@@ -174,6 +174,7 @@ namespace FBAContentApp.ViewModels
                 LabelsFactory.ShipmentBoxes = Shipment.Boxes;
                 LabelsFactory.AmzWarehouse = Shipment.FullfillmentShipTo;
                 LabelsFactory.ShipFromAddress = Shipment.CompanyShipFrom;
+                LabelsFactory.BoxCount = Shipment.Boxes.Count;
 
                 //create the labels after the necessary items have been passed into the constructor
                 LabelsFactory.CreateLabels();
@@ -249,7 +250,7 @@ namespace FBAContentApp.ViewModels
             using (var db = new Models.AppContext())
             {
                 //create shipment entity and set props
-                Entities.Shipment entShipment = new Shipment() { ShipmentId = Shipment.ShipmentID, Boxes = new List<ShipmentBox>() };
+                Entities.Shipment entShipment = new Shipment() { ShipmentId = Shipment.ShipmentID, Boxes = new List<ShipmentBox>(), ShipmentDate = Shipment.ShipmentDate };
 
                 //add each box one to entShipment entity 
                 foreach (var box in Shipment.Boxes)
@@ -257,6 +258,7 @@ namespace FBAContentApp.ViewModels
                     ShipmentBox entBox = new ShipmentBox
                     {
                         BoxContentString = box.FBALabel(),
+                        BoxNumber = box.BoxNumber,
                         BoxId = box.BoxID,
                         Shipment = entShipment
                     };

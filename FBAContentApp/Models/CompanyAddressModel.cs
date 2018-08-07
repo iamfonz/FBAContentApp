@@ -11,6 +11,8 @@ namespace FBAContentApp.Models
     {
         public int Id { get; set; }
 
+        public string LegalEntityName { get; set; }
+
         public string CompanyName { get; set; }
 
         public string AddressLine1 { get; set; }
@@ -35,6 +37,7 @@ namespace FBAContentApp.Models
         public CompanyAddressModel(CompanyAddress entity)
         {
             Id = entity.Id;
+            LegalEntityName = entity.LegalEntityName;
             CompanyName = entity.CompanyName;
             AddressLine1 = entity.AddressLine1;
             AddressLine2 = entity.AddressLine2;
