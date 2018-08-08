@@ -125,6 +125,9 @@
     <Compile Include="Views\AppWindows\CompanyAddressWin.xaml.cs">
       <DependentUpon>CompanyAddressWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HelpPage.xaml.cs">
+      <DependentUpon>HelpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AppWindows\CompanyAddressWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

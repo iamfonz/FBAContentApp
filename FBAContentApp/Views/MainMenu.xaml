@@ -20,6 +20,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         
@@ -34,6 +35,8 @@
         <Button Content="Amazon Warehouses" Style="{StaticResource mainMenuButtons}" Grid.Row="3" Click="AmzWhse_Button_Click"/>
 
         <Button Content="Settings" Style="{StaticResource mainMenuButtons}" Grid.Row="4" Click="Settings_Button_Click"/>
+
+        <Button Name="helpBtn" Content="Help" Style="{StaticResource mainMenuButtons}" Grid.Row="5" Click="helpBtn_Click"/>
 
 
 

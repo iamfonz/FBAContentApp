@@ -81,7 +81,7 @@ namespace FBAContentApp.Models
 
                  //ShipTo Amazon warehouse address
                  "^FO450,105^ADN,25,10^FDSHIP TO:^FS" +
-                 "^FO450,125^ADN,25,10^FD"+ ShipFromAddress.LegalEntityName+"^FS" +
+                 "^FO450,125^ADN,25,10^FDFBA:"+ ShipFromAddress.LegalEntityName+"^FS" +
                  "^FO450,145^ADN,25,10^FD" + AmzWarehouse.Name + "^FS" +
                  "^FO450,165^ADN,25,10^FD" + AmzWarehouse.AddressLine + "^FS" +
                  "^FO450,185^ADN,25,10^FD" + AmzWarehouse.City + ", " + AmzWarehouse.StateAbrv + " " + AmzWarehouse.ZipCode + "^FS" +

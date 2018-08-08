@@ -277,7 +277,25 @@ namespace FBAContentApp.ViewModels
                 //check if shipment exists in the database
                 if (db.Shipments.Any(s => s.ShipmentId == Shipment.ShipmentID))
                 {
-                    db.Entry(entShipment).State = EntityState.Modified;
+
+                    Shipment shipmentDel = db.Shipments.Find(Shipment.ShipmentID);
+
+               
+                    var bx = db.Boxes.Where((b => b.Shipment.ShipmentId == shipmentDel.ShipmentId)).ToList();
+
+                    for(int i =0; i < bx.Count(); i++)
+                    {
+                        db.Boxes.Remove(bx[i]);
+                    }
+                        
+                    
+                    db.SaveChanges();
+
+                    //then delete the shipment with shipmentID
+                    db.Shipments.Remove(shipmentDel);
+
+                    //finally add the shipment back into shipments table
+                    db.Shipments.Add(entShipment);
                 }
                 else
                 {

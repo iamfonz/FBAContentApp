@@ -46,6 +46,7 @@ namespace FBAContentApp.ViewModels
             {
                 //populate states
                 List<State> dbStates = db.States.ToList();
+               
 
                 foreach (State state in dbStates)
                 {
@@ -54,9 +55,9 @@ namespace FBAContentApp.ViewModels
 
                 //populate fullfillment centers
                 List<AmazonWarehouse> amazonWarehouses = db.AmazonWarehouses.ToList();
-                amazonWarehouses.OrderBy(i => i.WarehouseCode);
+                amazonWarehouses.Sort((a1, a2) => String.Compare(a1.WarehouseCode, a2.WarehouseCode));
 
-                foreach(AmazonWarehouse amz in amazonWarehouses)
+                foreach (AmazonWarehouse amz in amazonWarehouses)
                 {
                     FulFillmentCenters.Add(new AmzWarehouseModel(amz));
                 }

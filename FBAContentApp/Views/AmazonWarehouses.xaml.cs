@@ -79,7 +79,7 @@ namespace FBAContentApp.Views
             amzWindow.ShowDialog();
             if (amzWindow.DialogResult == true)
             {
-                MessageBox.Show("The new Amazon Fulfillment Warehouse was successfully added to the Databse! :D");
+                MessageBox.Show("The new Amazon Fulfillment Warehouse was successfully added to the Database! :D");
                 //refresh UI
                 PopulateGUI();
             }

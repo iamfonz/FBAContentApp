@@ -71,6 +71,7 @@ namespace FBAContentApp.ViewModels
                     CompanyAddress company = new CompanyAddress()
                     {
                         Id = companyAddress.Id,
+                        LegalEntityName = companyAddress.LegalEntityName,
                         CompanyName = companyAddress.CompanyName,
                         AddressLine1 = companyAddress.AddressLine1,
                         AddressLine2 = companyAddress.AddressLine2,

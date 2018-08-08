@@ -47,6 +47,12 @@ namespace FBAContentApp.Views
         {
             Switcher.Switch(new SettingsView());
         }
+
+        private void helpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switch(new HelpPage());
+        }
+
         #endregion
 
         #region ISwitchable Implementation
@@ -55,5 +61,7 @@ namespace FBAContentApp.Views
             throw new NotImplementedException();
         }
         #endregion
+
+
     }
 }

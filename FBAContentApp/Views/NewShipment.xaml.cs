@@ -49,6 +49,20 @@ namespace FBAContentApp.Views
             cmbx_AmazonWhses.ItemsSource = ProcessShipmentVM.AmzWarehouses;
             cmbx_AmazonWhses.Items.Refresh();
 
+        } 
+
+        void RefreshGUI()
+        {
+            //clear GUI items
+            lsbx_AddedBoxes.ItemsSource = null;
+            lsbx_AddedBoxes.Items.Refresh();
+
+            cmbx_AmazonWhses.ItemsSource = new List<AmzWarehouseModel>();
+            cmbx_AmazonWhses.ItemsSource = ProcessShipmentVM.AmzWarehouses;
+            cmbx_AmazonWhses.Items.Refresh();
+            lbl_BoxCount.Content = "0";
+            //clear view model.
+            ProcessShipmentVM.ClearAll();
         }
 
         #endregion
@@ -73,10 +87,12 @@ namespace FBAContentApp.Views
             amzWindow.ShowDialog();
             if (amzWindow.DialogResult == true)
             {
-
+                MessageBox.Show("New Amazon warehouse successfully added to DB!");
+                RefreshGUI();
             }
             else
             {
+                MessageBox.Show("Unable to save Amazon warehouse to DB.");
 
             }
         }
@@ -126,6 +142,10 @@ namespace FBAContentApp.Views
                     }
 
                 }
+            }
+            else
+            {
+                RefreshGUI();
             }
 
         }
@@ -183,7 +203,7 @@ namespace FBAContentApp.Views
                         MessageBox.Show(messageString);
 
                         //reinitialize GUI
-                        PopulateGUI();
+                        RefreshGUI();
                     }
                     else
                     {
@@ -213,16 +233,7 @@ namespace FBAContentApp.Views
         /// <param name="e"></param>
         private void btn_Clear_Click(object sender, RoutedEventArgs e)
         {
-            //clear GUI items
-            lsbx_AddedBoxes.ItemsSource = new List<FBABox>() ;
-            lsbx_AddedBoxes.Items.Refresh();
-
-            cmbx_AmazonWhses.ItemsSource = new List<AmzWarehouseModel>();
-            cmbx_AmazonWhses.ItemsSource = ProcessShipmentVM.AmzWarehouses;
-            cmbx_AmazonWhses.Items.Refresh();
-            lbl_BoxCount.Content = "0";
-            //clear view model.
-            ProcessShipmentVM.ClearAll();
+            RefreshGUI();
         }
 
 

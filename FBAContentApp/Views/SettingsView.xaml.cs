@@ -265,7 +265,7 @@ namespace FBAContentApp.Views
             if(comboCompanyAddress.SelectedItem is CompanyAddressModel)
             {
                 CompanyAddressModel companyAddress = settingsVM.CompanyAddresses[comboCompanyAddress.SelectedIndex];
-                txtBlockFullCompanyAddress.Text = companyAddress.CompanyName + "\n" + companyAddress.AddressLine1 + "\n" + companyAddress.AddressLine2 + "\n" + companyAddress.AddressLine3 + "\n" + companyAddress.City + ", " + companyAddress.StateAbrv + " " + companyAddress.ZipCode; ;
+                txtBlockFullCompanyAddress.Text = companyAddress.LegalEntityName+ "\n"+ companyAddress.CompanyName + "\n" + companyAddress.AddressLine1 + "\n" + companyAddress.AddressLine2 + "\n" + companyAddress.AddressLine3 + "\n" + companyAddress.City + ", " + companyAddress.StateAbrv + " " + companyAddress.ZipCode; ;
 
                 editShipFrBtn.IsEnabled = true;
                 deleteShipFrBtn.IsEnabled = true;

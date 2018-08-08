@@ -68,6 +68,7 @@ namespace FBAContentApp.Views.AppWindows
         void PopulateGUI()
         {
             //set all UI controls to values
+            txtEntityName.Text = compAddress.LegalEntityName;
             txtCompName.Text = compAddress.CompanyName;
             txtCompAddress1.Text = compAddress.AddressLine1;
             txtCompAddress2.Text = compAddress.AddressLine2;
@@ -95,10 +96,10 @@ namespace FBAContentApp.Views.AppWindows
         bool ValidateInput()
         {
             //check nothing is null from UI controls
-            if (txtCompAddress1.Text != null & txtCompCity.Text != null & txtCompName.Text != null & txtZip.Text != null & comboState.SelectedItem != null)
+            if (txtCompAddress1.Text != null & txtCompCity.Text != null & txtCompName.Text != null & txtZip.Text != null & comboState.SelectedItem != null & txtEntityName != null)
             {
                 CompanyAddressMod.CompanyName = txtCompName.Text;
-
+                CompanyAddressMod.LegalEntityName = txtEntityName.Text;
                 CompanyAddressMod.AddressLine1 = txtCompAddress1.Text;
                 CompanyAddressMod.AddressLine2 = txtCompAddress2.Text;
                 CompanyAddressMod.AddressLine3 = txtCompAddress3.Text;

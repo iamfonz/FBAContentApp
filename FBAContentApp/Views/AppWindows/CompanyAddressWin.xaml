@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FBAContentApp.Views.AppWindows"
         mc:Ignorable="d"
-        Title="Company Address" Height="640" Width="600">
+        Title="Company Address" Height="700" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,43 +24,46 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--New Company Address LABEL-->
         <Label x:Name="titleLabel" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0" Margin="0,50,0,50" />
-
+        
+        <Label Content="Entity Name" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <TextBox Name="txtEntityName" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1"/>
+        
         <!--Company Name Field-->
-        <Label Content="Company Name" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-        <TextBox Name="txtCompName" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Label Content="Company Name" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <TextBox Name="txtCompName" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2"/>
 
         <!--Company Address1 Field-->
-        <Label Content="Address Line 1" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"/>
-        <TextBox Name="txtCompAddress1" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <Label Content="Address Line 1" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3"/>
+        <TextBox Name="txtCompAddress1" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="3"/>
 
         <!--Company Address3 Field-->
-        <Label Content="Address Line 2" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3"/>
-        <TextBox Name="txtCompAddress2" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="3"/>
+        <Label Content="Address Line 2" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"/>
+        <TextBox Name="txtCompAddress2" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4"/>
 
         <!--Company Address3 Field-->
-        <Label Content="Address Line 3" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"/>
-        <TextBox Name="txtCompAddress3" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4"/>
+        <Label Content="Address Line 3" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"/>
+        <TextBox Name="txtCompAddress3" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5"/>
 
         <!--Company City Field-->
-        <Label Content="City" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"/>
-        <TextBox Name="txtCompCity" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="5"/>
+        <Label Content="City" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"/>
+        <TextBox Name="txtCompCity" Style="{StaticResource compTextBox}" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="6"/>
 
         <!--Company STATE Field-->
-        <Label Content="State" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.Row="6"/>
-        <ComboBox Name="comboState" Grid.Column="2" Grid.Row="6"  Margin="0,20,0,20"/>
+        <Label Content="State" Style="{StaticResource settingsLabels}" Grid.Column="1" Grid.Row="7"/>
+        <ComboBox Name="comboState" Grid.Column="2" Grid.Row="7"  Margin="0,20,0,20"/>
 
         <!--Company ZIP Field-->
-        <Label Content="Zip" Style="{StaticResource settingsLabels}" Grid.Column="3" Grid.Row="6" HorizontalAlignment="Right"/>
-        <TextBox Name="txtZip" Style="{StaticResource compTextBox}" Grid.Column="4" Grid.Row="6"  />
+        <Label Content="Zip" Style="{StaticResource settingsLabels}" Grid.Column="3" Grid.Row="7" HorizontalAlignment="Right"/>
+        <TextBox Name="txtZip" Style="{StaticResource compTextBox}" Grid.Column="4" Grid.Row="7"  />
 
         <!--Save and Cancel buttons-->
 
-        <Button x:Name="saveButton" Content="Save" Style="{StaticResource okaySaveBtns}" Click="saveButton_Click" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7"/>
-        <Button x:Name="cancelButton" Content="Cancel" Style="{StaticResource okaySaveBtns}" Click="cancelButton_Click"  Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="7"/>
+        <Button x:Name="saveButton" Content="Save" Style="{StaticResource okaySaveBtns}" Click="saveButton_Click" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8"/>
+        <Button x:Name="cancelButton" Content="Cancel" Style="{StaticResource okaySaveBtns}" Click="cancelButton_Click"  Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="8"/>
 
 
     </Grid>

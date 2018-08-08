@@ -82,7 +82,7 @@
         
 
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="5">
-            <Button x:Name="deleteShipmentBtn" Content="Delete" Style="{StaticResource amzwhseButton}" />
+            
             <Button x:Name="printBoxBtn"  Click="printBoxBtn_Click"  Content="Reprint Box Label(s)" Style="{StaticResource amzwhseButton}" />
         </WrapPanel>
 

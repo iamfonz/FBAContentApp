@@ -50,7 +50,7 @@ namespace FBAContentApp.Models
 
         public override string ToString()
         {
-            return CompanyName + " : " + AddressLine1 + " " + City + ", " + StateAbrv;
+            return LegalEntityName + "; " + CompanyName + ":  " + AddressLine1 + " " + City + ", " + StateAbrv;
         }
     }
 }
