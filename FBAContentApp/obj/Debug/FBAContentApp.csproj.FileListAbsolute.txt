@@ -43,3 +43,8 @@ C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAC
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.Migrations.Init3.resources
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.Migrations.Init4.resources
 C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp.Migrations.Init5.resources
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\Views\HelpPage.g.cs
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\Views\HelpPage.baml
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\bin\Debug\Markdig.dll
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\bin\Debug\Markdig.xml
+C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\Debug\FBAContentApp_Content.g.cs

@@ -1,0 +1,184 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .scrollClass {
+            height: 450px;
+            overflow-y: scroll;
+        }
+    </style>
+
+    <title>Hello, world!</title>
+</head>
+<body data-spy="scroll" data-target="#v-pills-tab">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col scrollClass sticky-top">
+
+
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-overview-tab" data-toggle="pill" href="#v-pills-overview" role="tab" aria-controls="v-pills-overview" aria-selected="true">Overview</a>
+
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Create Box Content Workbook</a>
+
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-processShipment" role="tab" aria-controls="v-pills-processShipment" aria-selected="false">Processing a Shipment</a>
+
+
+                    <a class=" nav-link" id="v-pills-amzWarehouses-tab" href="#v-pills-amzWarehouses" data-toggle="pill" role="tab" aria-controls="v-pills-amzWarehouses" aria-expanded="false" aria-selected="false">Amazon Warehouses</a>
+
+                    <a class=" nav-link" id="v-pills-shipmentsHistory-tab" href="#v-pills-shipmentsHistory" data-toggle="pill" role="tab" aria-controls="v-pills-shipmentsHistory" aria-expanded="false" aria-selected="false">Shipments History</a>
+
+                    <a class="nav-link nav-pills flex-column" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                    <nav class="navbar nav-pills flex-column" id="settingsNav">
+                        <a class="nav-link" href="#item-settings-1">Overview</a>
+                        <a class="nav-link" href="#item-settings-2">Adding a Company Address</a>
+                        <a class="nav-link " href="#item-settings-3">Selecting a Label Printer</a>
+                        <a class="nav-link " href="#item-settings-4">Selecting Save Directory</a>
+                    </nav>
+
+                    <a class=" nav-link" id="v-pills-about-tab" href="#v-pills-about" data-toggle="pill" role="tab" aria-controls="v-pills-about" aria-expanded="false" aria-selected="false">About and Attribution</a>
+
+                </div>
+            </div>
+
+            <div class="col-9">
+
+
+
+                <div class="tab-content" id="v-pills-tabContent">
+
+                    <div class="tab-pane fade show active" id="v-pills-overview" role="tabpanel" aria-labelledby="v-pills-overview-tab">
+                        <h2 class="text-center">Program Overview</h2><br /><br />
+                        <p>The purpose of this program is to create box content labels that meet Amazon fulfillment centers' <a href="https://sellercentral.amazon.com/gp/help/202049090">specifications</a> (you'll need to log into Seller Central to view the documentation).</p>
+                        <p>
+                            The program accepts an Excel workbook (.xlsx extenstion) file as the contents of an entire shipment. Each worksheet in the workbook represents a box.
+                            The program goes through each worksheet and creates the appropriate box content string. The program creates a Zebra Programming Language (ZPL) string that is sent to the label printer for printing. (<strong>NOTE:</strong> The printer used must have the capability of interpreting ZPL 2 commands.) All shipment information is saved to a database and labels like the image below are printed.
+                        </p>
+
+                        <div class="card text-center p-3" style="width: 80%;">
+                            <img class="card-img-top justify-content-center" src="Resources/images/zplLabel.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">Box Content Label produced by this program.</p>
+                            </div>
+                        </div>
+                        <br /><br />
+
+                        <p>
+                            The program is loaded with a default Company Ship From address, the one in the image above. In order to reflect your company's information, you must add a company address in the <strong>Settings</strong> portion of this application. Furthermore, the label also produces the shipment box label that Amazon provides as well. Therefore, you only need this label and not the ones that are generated in Seller Central. However, feel free to use both.
+                        </p>
+
+                        <p>As mentioned previously, when the labels are printed they are also saved to a database. This allows the capability of looking at shipments from the past as well as easily reprinting labels through the <strong>History</strong> portion of this application. The application also saves shipment contents information in a JSON file to the directory specified in the <strong>Settings</strong> portion of the application. This is to provide an easy way of doing more with the data if someone chooses to do so.</p>
+
+
+                    </div>
+        <!------------------------------------------------------- end of OVERVIEW Tab-pill-pane------------------------------------------------------------>
+
+
+
+                    <div class="tab-pane fade " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <h2 class="text-center">Creating a Box Content Excel Workbook</h2><br />
+                        <p>
+                            This application uses Excel workbooks to read box content information for a shipment. Each worksheet in a workbook represents a box. The box number is determined by the Sheet number. We'll go into more detail on how to prepare this file. If you don't have access to an installation of Excel, you can also prepare this in Google Sheets. As we go through this how-to, examples for both Excel and Google Sheets will be presented.
+                        </p>
+                        <br /><br />
+                        <h4>1. Prepare the file</h4> <br />
+                        <h6>Using Microsoft Excel</h6>
+                        <p>Open a new Excel workbook. Save the workbook. When prompted for the file name, name the file the <strong><var>Shipment Id</var></strong> for the shipment. It usually starts with <strong>FBA</strong> and a total of 12 characters long. Save it to your desired directory.</p>
+
+                        <div class="card text-center p-3" style="width: 80%;">
+                            <img class="card-img-top justify-content-center" src="Resources/images/saveAsExcel.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text">Creating new Workbook, saving with the file name the same as <strong>Shipment Id</strong>. This particular example is saving the file to Desktop.</p>
+                            </div>
+                        </div>
+                        <br /><br />
+
+                        <h6>Using Google Sheets</h6>
+                        <p>From the Google Sheets start page, start a new Blank Sheet. In the top left-hand corner, title the sheet as the <strong><var>Shipment Id</var></strong>.</p>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-processShipment" role="tabpanel" aria-labelledby="v-pills-processShipment-tab">
+                        Processing shipments tab contents
+                    </div>
+
+
+                    <div class="tab-pane fade" id="v-pills-amzWarehouses" role="tabpanel" aria-labelledby="v-pills-amzWarehouses-tab">
+                        Amazon Warehouses tab contents
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-shipmentsHistory" role="tabpanel" aria-labelledby="v-pills-shipmentsHistory-tab">
+                        Shipment History tab contents
+                    </div>
+
+
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+                        <h3 class="text-center" id="item-settings-1">Settings Overview</h3>
+                        <p>
+                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
+
+                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum..
+                        </p>
+
+
+
+                        <h5 id="item-settings-2">Adding a Company Address</h5>
+                        <p>
+                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
+
+                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum.
+                        </p>
+
+
+                        <h5 id="item-settings-3">Selecting a Label Printer</h5>
+                        <p>
+                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
+
+                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum.
+                        </p>
+
+
+                        <h5 id="item-settings-4">Selecting Save Directory</h5>
+                        <p>
+                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
+
+                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum.
+                        </p>
+
+
+                    </div>
+
+                    <div class="tab-pane fade" id="v-pills-about" role="tabpanel" aria-labelledby="v-pills-about-tab">
+                        About and Attributions
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $('body').scrollspy({ target: '#v-pills-tab', offset: 0 })
+    </script>
+</body>
+</html>
