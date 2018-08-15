@@ -15,7 +15,7 @@
         }
     </style>
 
-    <title>Hello, world!</title>
+    <title>FBA Content App User Guide</title>
 </head>
 <body data-spy="scroll" data-target="#v-pills-tab">
     <div class="container-fluid">
@@ -25,18 +25,18 @@
 
 
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-overview-tab" data-toggle="pill" href="#v-pills-overview" role="tab" aria-controls="v-pills-overview" aria-selected="true">Overview</a>
+                    <a class="nav-link active" id="v-pills-overview-tab" data-toggle="pill" href="#v-pills-overview" role="tab" aria-controls="v-pills-overview" aria-selected="true" onclick="scrollToTop()">Overview</a>
 
-                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Create Box Content Workbook</a>
+                    <a onclick="scrollToTop()" class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">Create Box Content Workbook</a>
 
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-processShipment" role="tab" aria-controls="v-pills-processShipment" aria-selected="false">Processing a Shipment</a>
+                    <a onclick="scrollToTop()" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-processShipment" role="tab" aria-controls="v-pills-processShipment" aria-selected="false">Processing a Shipment</a>
 
 
-                    <a class=" nav-link" id="v-pills-amzWarehouses-tab" href="#v-pills-amzWarehouses" data-toggle="pill" role="tab" aria-controls="v-pills-amzWarehouses" aria-expanded="false" aria-selected="false">Amazon Warehouses</a>
+                    <a onclick="scrollToTop()" class=" nav-link" id="v-pills-amzWarehouses-tab" href="#v-pills-amzWarehouses" data-toggle="pill" role="tab" aria-controls="v-pills-amzWarehouses" aria-expanded="false" aria-selected="false">Amazon Warehouses</a>
 
-                    <a class=" nav-link" id="v-pills-shipmentsHistory-tab" href="#v-pills-shipmentsHistory" data-toggle="pill" role="tab" aria-controls="v-pills-shipmentsHistory" aria-expanded="false" aria-selected="false">Shipments History</a>
+                    <a onclick="scrollToTop()" class=" nav-link" id="v-pills-shipmentsHistory-tab" href="#v-pills-shipmentsHistory" data-toggle="pill" role="tab" aria-controls="v-pills-shipmentsHistory" aria-expanded="false" aria-selected="false">Shipments History</a>
 
-                    <a class="nav-link nav-pills flex-column" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                    <a onclick="scrollToTop()" class="nav-link nav-pills flex-column" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
                     <nav class="navbar nav-pills flex-column" id="settingsNav">
                         <a class="nav-link" href="#item-settings-1">Overview</a>
                         <a class="nav-link" href="#item-settings-2">Adding a Company Address</a>
@@ -44,7 +44,7 @@
                         <a class="nav-link " href="#item-settings-4">Selecting Save Directory</a>
                     </nav>
 
-                    <a class=" nav-link" id="v-pills-about-tab" href="#v-pills-about" data-toggle="pill" role="tab" aria-controls="v-pills-about" aria-expanded="false" aria-selected="false">About and Attribution</a>
+                    <a onclick="scrollToTop()" class=" nav-link" id="v-pills-about-tab" href="#v-pills-about" data-toggle="pill" role="tab" aria-controls="v-pills-about" aria-expanded="false" aria-selected="false">About and Attribution</a>
 
                 </div>
             </div>
@@ -54,7 +54,7 @@
 
 
                 <div class="tab-content" id="v-pills-tabContent">
-
+                    <!------------------------------------------------------- Start of OVERVIEW Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade show active" id="v-pills-overview" role="tabpanel" aria-labelledby="v-pills-overview-tab">
                         <h2 class="text-center">Program Overview</h2><br /><br />
                         <p>The purpose of this program is to create box content labels that meet Amazon fulfillment centers' <a href="https://sellercentral.amazon.com/gp/help/202049090">specifications</a> (you'll need to log into Seller Central to view the documentation).</p>
@@ -63,12 +63,12 @@
                             The program goes through each worksheet and creates the appropriate box content string. The program creates a Zebra Programming Language (ZPL) string that is sent to the label printer for printing. (<strong>NOTE:</strong> The printer used must have the capability of interpreting ZPL 2 commands.) All shipment information is saved to a database and labels like the image below are printed.
                         </p>
 
-                        <div class="card text-center p-3" style="width: 80%;">
-                            <img class="card-img-top justify-content-center" src="Resources/images/zplLabel.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text">Box Content Label produced by this program.</p>
-                            </div>
-                        </div>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid" src="Resources/images/zplLabel.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Box Content Label produced by this program.
+                            </figcaption>
+                        </figure>
                         <br /><br />
 
                         <p>
@@ -79,7 +79,7 @@
 
 
                     </div>
-        <!------------------------------------------------------- end of OVERVIEW Tab-pill-pane------------------------------------------------------------>
+                    <!------------------------------------------------------- end of OVERVIEW Tab-pill-pane------------------------------------------------------------------------------------------->
 
 
 
@@ -93,31 +93,212 @@
                         <h6>Using Microsoft Excel</h6>
                         <p>Open a new Excel workbook. Save the workbook. When prompted for the file name, name the file the <strong><var>Shipment Id</var></strong> for the shipment. It usually starts with <strong>FBA</strong> and a total of 12 characters long. Save it to your desired directory.</p>
 
-                        <div class="card text-center p-3" style="width: 80%;">
-                            <img class="card-img-top justify-content-center" src="Resources/images/saveAsExcel.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text">Creating new Workbook, saving with the file name the same as <strong>Shipment Id</strong>. This particular example is saving the file to Desktop.</p>
-                            </div>
-                        </div>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid" src="Resources/images/saveAsExcel.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Create a new Workbook, saving with the file name the same as <strong>Shipment Id</strong>. This particular example is saving the file to Desktop.
+                            </figcaption>
+                        </figure>
                         <br /><br />
 
                         <h6>Using Google Sheets</h6>
-                        <p>From the Google Sheets start page, start a new Blank Sheet. In the top left-hand corner, title the sheet as the <strong><var>Shipment Id</var></strong>.</p>
+                        <p>From the Google Sheets start page, start a new Blank Sheet. </p>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid" src="Resources/images/sheetsNew.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Start a blank sheet in Google Sheets.
+                            </figcaption>
+                        </figure>
 
+                        <br />
+
+                        <p>In the top left-hand corner, title the sheet as the <strong><var>Shipment Id</var></strong>.</p>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/nameSheet.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Name the sheet the <strong><var>Shipment Id</var></strong>
+                            </figcaption>
+                        </figure>
+
+                        <br /><br />
+                        <h4>2. Fill Sheets with Items</h4> <br />
+                        <p>
+                            Using your preferred method (using a scanner or manually typing) enter the contents of a box in the first column.
+                            Enter each item, even if there's two of the same item. The program will automatically tally-up items with the same identifier.
+                        </p>
+                        <br />
+                        <h6>Example in Excel</h6>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/excelItemsIn1.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Items in the first box in Excel. Notice there are duplicate items. Also this is the first box as the sheet number suggests.
+                            </figcaption>
+                        </figure>
+                        <br />
+                        <h6>Example in Google Sheets</h6>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/sheetsItemsIn1.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Items in the first box in Google Sheets. Notice there are duplicate items. Also this is the first box as the sheet number suggests.
+                            </figcaption>
+                        </figure>
+                        <br /><br />
+
+                        <p>When you're ready for a new box, add a sheet to the workbook and repeat the steps from above.</p><br />
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/excelAddSheet.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Adding a sheet in Excel. The before and after.
+                            </figcaption>
+                        </figure><br /><br />
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/excelAddSheet.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Adding a sheet in Google Sheets. The before and after.
+                            </figcaption>
+                        </figure>
+                        <br /><br />
+                        <p>Repeat this same process for every single box in the shipment.</p><br /><br /><br />
+
+                        <h4>3. Save and Exit</h4> <br />
+                        <p>In Excel this is self-explanatory. <code>File > Save (Ctrl+S)</code> and close the workbook.</p>
+
+                        <p>
+                            In Google sheets there's a few more steps to complete. You'll need to download the workbook as an Excel file.
+                            Go to <code>File > Download As > Microsoft Excel (.xlsx)</code>. Save to your desired directory.
+                        </p>
+                        <br />
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/sheetsSave.jpg" alt="Card image cap">
+                            <figcaption class="figure-caption">
+                                Go to <code>File > Download As > Microsoft Excel (.xlsx)</code> to save the workbook as an Excel file.
+                            </figcaption>
+                        </figure>
+
+                        <br /><br />
+                        <p>Now your workbook is ready to be processed by this program. :D</p>
+                        <br /><br /><br />
                     </div>
 
+
+                    <!------------------------------------------------------- Start of PROCESSING Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="v-pills-processShipment" role="tabpanel" aria-labelledby="v-pills-processShipment-tab">
-                        Processing shipments tab contents
+                        <h2 class="text-center">Processing a Shipment</h2><br /><br />
+                        <p>Now that a workbook has been created for a shipment, this program is ready to process it and print box content labels. Before proceeding, make sure you have a default <strong>Label Printer</strong> selected in <strong>Settings</strong>, as well as a <strong>Company Address</strong>, and a <strong>Save File Directory.</strong> If a <strong>Company Address</strong> for your company is not set, it will use the default one created at the time of install, which just a generic value. If <strong>Label Printer</strong> and <strong>Save File Directory</strong> are not set, the labels will not print and no file will be saved of the shipment details. However, the program will still save it to the database and you will be able to view the shipment in the <strong>History</strong> section of the application.</p>
+                        <p>Now that we have that out of the way, let's process a shipment.</p>
+                        <br /><br />
+                        <h4>1. Add Boxes</h4><br />
+                        <p>
+                            From the Main Menu of the application, click on the <strong>Process Shipment</strong> button. This will take you to the shipment processing page. Click the <strong>Add Boxes</strong> button and select the workbok that contains the shipment box contents you wish to process. If it's a large shipment with many boxes, give the program a moment to process the file.
+                        </p><br />
+
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/processAddBoxes.jpg" alt="Adding boxes ">
+                            <figcaption class="figure-caption">
+                                Click <strong>Add Boxes</strong> button and select the workbook that contains the shipment contents.
+                            </figcaption>
+                        </figure> <br /><br /><br />
+
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/processAdded.jpg" alt="Program after boxes added">
+                            <figcaption class="figure-caption">
+                                View after the boxes are added.
+                            </figcaption>
+                        </figure><br /><br /><br />
+
+                        <h4>2. Select the Amazon Warehouse</h4><br />
+                        <p>
+                            Next, select the Amazon Fulfillment Center the shipment is going to. You can find this in Amazon Seller Central. In the Shipping Queue (Seller Central), find your shipment by Shipment ID and look at the column titled "Destination". There will be a four character combination indicating where that shipment is going. That four character combination is in the drop-down menu for selecting an Amazon warehouse. You can also find it by clicking into the shipment from the shipping queue and looking at the "Ship To" address.
+
+                        </p>
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/shippingQueue1.jpg" alt="Find WarehouseId in Shipping queue">
+                            <figcaption class="figure-caption">
+                                First method to find the Amazon Warehouse from the Shipping Queue.
+                            </figcaption>
+                        </figure><br /><br /><br />
+                        <!--Method two by clicking into shipment-->
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/shipToInside.jpg" alt="Find Amazon warehouse within the shipment">
+                            <figcaption class="figure-caption">
+                                Second method to find the Amazon Warehouse from within the Shipment.
+                            </figcaption>
+                        </figure>
+                        <br />
+                        <p>If the fulfillment center is not in the drop-down, click the <strong>Add New Warehouse</strong> button to add it into the database.</p>
+                        <br /><br />
+                        <figure class="figure" style="width: 80%;">
+                            <img class="figure-img img-fluid " src="Resources/images/processWhse.jpg" alt="Selecting Amazon Warehouse">
+                            <figcaption class="figure-caption">
+                                Selection of the Amazon warehouse this shipment is going to.
+                            </figcaption>
+                        </figure><br /><br />
+
+                        <h4>3. Print Boxes</h4><br />
+                        <p>Once the boxes have been added and an Amazone Warehouse has been selected, you are ready to print. Simply click the <strong>Print Boxes</strong> button and the labels will print as well as saving the shipment details in a JSON formatted file and to the database. A pop-up box will appear informing you of any errors/success.</p><br /><br />
+                        <figure class="figure" style="width:80%;">
+                            <img class="figure-img img-fluid" src="Resources/images/prcessComplete.jpg" alt="pop-up after printing." />
+                            <figcaption class="figure-caption">
+                                Pop-up box after click the <strong>Print Boxes</strong> button.
+                            </figcaption>
+                        </figure>
+                        <br /><br />
+                        <p>
+                            <strong>REMINDER:</strong> If a <strong>Company Address</strong> for your company is not set, it will use the default one created at the time of install, which just a generic value. If <strong>Label Printer</strong> and <strong>Save File Directory</strong> are not set, the labels will not print and no file will be saved of the shipment details. However, the program will still save it to the database and you will be able to view the shipment in the <strong>History</strong> section of the application.
+                        </p><br /><br /><br />
+
                     </div>
 
-
+                    <!------------------------------------------------------- END of PROCESSING Tab-pillpane----------------------------------------------------------------------------------------->
+                    <!------------------------------------------------------- Start of AMAZON Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="v-pills-amzWarehouses" role="tabpanel" aria-labelledby="v-pills-amzWarehouses-tab">
-                        Amazon Warehouses tab contents
+                        <h2 class="text-center">Amazon Warehouses</h2><br /><br />
+                        <h4>Overview</h4><br />
+                        <p>
+                            The Amazon Warehouse section lists all the Amazon Warehouses/Fulfillment Centers in the database. The database is pre-loaded with many warehouses located in the U.S. This is not necessarily all of them. From this section you can add, edit, and delete warehouses as needed. Doing so is quite self-explanatory. Any changes you make here are automatically saved to the database.
+                        </p>
+                        <br /><br />
+                        <figure class="figure">
+                            <img class="figure-img img-fluid" src="Resources/images/amazonWarehouses.jpg" alt="Amazon Warehouses View" />
+                            <figcaption class="figure-caption">
+                                The Amazon Warehouses View of the application. All Amazon warehouses in the database are listed here.
+                            </figcaption>
+                        </figure>
+                        <br /><br />
+
+                        <figure class="figure">
+                            <img src="Resources/images/amzEditing.png" class="figure-img img-fluid" alt="Editing/Adding a Warehouse" />
+                            <figcaption class="figure-caption">
+                                Editing a selected warehouse. When adding one, the same pop-up appears but it's blank instead of filled.
+                            </figcaption>
+                        </figure>
+
+                        <br /><br /><br />
+
                     </div>
 
+                    <!------------------------------------------------------- END of AMAZON Tab-pillpane----------------------------------------------------------------------------------------->
+
+
+
+
+
+                    <!------------------------------------------------------- START of History Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="v-pills-shipmentsHistory" role="tabpanel" aria-labelledby="v-pills-shipmentsHistory-tab">
-                        Shipment History tab contents
+                        <h2 class="text-center">History</h2>
+                        <br /><br />
+                        <h4>Overview</h4>
+                        <p>
+                            In this section of the application, a user can view all of the shipments that are stored in the database. Shipments get stored in the database when a shipment is processed and labels are printed from the <strong>Process Shipments</strong> section of the application.
+                        </p>
+
+
                     </div>
+                    <!------------------------------------------------------- END of History Tab-pillpane----------------------------------------------------------------------------------------->
+
+
+
+
 
 
                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
@@ -178,7 +359,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-        $('body').scrollspy({ target: '#v-pills-tab', offset: 0 })
+        $('body').scrollspy({ target: '#v-pills-tab', offset: 0 });
+
+        function scrollToTop() {
+            window.scroll(0, 0);
+
+            var settingsNavItems = document.getElementById('settingsNave').children;
+            for (var i = 0; i < settingsNavItems.length; i++) {
+
+                settingsNavItems[i].classList.remove('active');
+            }
+
+        }
+
     </script>
 </body>
 </html>

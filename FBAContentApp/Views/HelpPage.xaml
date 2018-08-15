@@ -35,7 +35,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Name="titleLabel" Content="Help Center" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0"/>
+        <Label Name="titleLabel" Content="User Guide" Style="{StaticResource titleLabel}" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="0"/>
 
 
         <cefSharp:ChromiumWebBrowser  IsBrowserInitializedChanged="browser_IsBrowserInitializedChanged" x:Name="browser" Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="1" Grid.RowSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

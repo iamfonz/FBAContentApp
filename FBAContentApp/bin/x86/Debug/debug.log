@@ -56,3 +56,5 @@
 [0813/155016.842:ERROR:render_media_log.cc(30)] MediaEvent: PIPELINE_ERROR DEMUXER_ERROR_COULD_NOT_OPEN
 [0813/161106.516:WARNING:render_frame_host_impl.cc(2751)] OnDidStopLoading was called twice.
 [0813/165800.899:ERROR:broker_win.cc(134)] Error sending sync broker message
+[0815/140126.236:INFO:CONSOLE(288)] "Uncaught TypeError: Cannot read property 'children' of null", source: file:///C:/Users/Back-Warehouse/Documents/Visual%20Studio%202017/Projects/FBAContentApp/FBAContentApp/Views/AppWindows/Help.html (288)
+[0815/140132.018:INFO:CONSOLE(288)] "Uncaught TypeError: Cannot read property 'children' of null", source: file:///C:/Users/Back-Warehouse/Documents/Visual%20Studio%202017/Projects/FBAContentApp/FBAContentApp/Views/AppWindows/Help.html (288)

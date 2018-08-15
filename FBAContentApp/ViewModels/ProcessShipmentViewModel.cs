@@ -313,18 +313,35 @@ namespace FBAContentApp.ViewModels
 
         /// <summary>
         /// Saves the shipment information to the current directory or the specified save file directory
-        /// in settings, if the user has set one. May throw an exception if unable to save file to the directory.
+        /// in settings, if the user has set one. May throw an exception if unable to save file to the directory. 
+        /// Also saves the entire ZPL string to a text file, in case user doesn't have a ZPL thermal label, 
+        /// an online tool can be used.
         /// </summary>
         public void SaveShipmentToFile()
         {
-            try
+            //get the entire ZPL string
+            string zplLabelsString = "";
+            foreach (ZPLLabel label in LabelsFactory.BoxLabels)
             {
-                File.WriteAllText(SaveDirectory, Shipment.ToString());
+                zplLabelsString += label.ZPLCommand;
+            }
+
+            
+            try
+            {   //save shipment in txt file as JSON
+                File.WriteAllText(SaveDirectory +"\\"+ Shipment.ShipmentID+ ".txt", Shipment.ToString());
+
+                //save zpl string of labels to text file
+                File.WriteAllText(SaveDirectory + "\\" + Shipment.ShipmentID + "-ZPL.txt", zplLabelsString);
+
             }
             catch (Exception ex)
             {
                 throw new NonSaveableException(message: "Unable to save the contents of shipment '" + Shipment.ShipmentID + "' for the following reason:" + ex.Message);
             }
+
+
+
         }
 
 

@@ -36,7 +36,7 @@
 
         <Button Content="Settings" Style="{StaticResource mainMenuButtons}" Grid.Row="4" Click="Settings_Button_Click"/>
 
-        <Button Name="helpBtn" Content="Help" Style="{StaticResource mainMenuButtons}" Grid.Row="5" Click="helpBtn_Click"/>
+        <Button Name="helpBtn" Content="User Guide" Style="{StaticResource mainMenuButtons}" Grid.Row="5" Click="helpBtn_Click"/>
 
 
 
