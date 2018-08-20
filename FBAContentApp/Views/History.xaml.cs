@@ -70,6 +70,44 @@ namespace FBAContentApp.Views
         }
 
 
+        /// <summary>
+        /// Grabs the selected boxes from the List Box.
+        /// </summary>
+        /// <returns>List of FBABox from the listbox.</returns>
+        private List<FBABox> GetSelectedBoxes()
+        {
+            List<FBABox> selectedBoxes = new List<FBABox>();
+
+            //get boxes from selected items in the listbox
+            foreach (var item in boxListBox.SelectedItems)
+            {
+                if (item is FBABox) //check that only FBABox items are being grabbed
+                {
+                    FBABox newBox = (FBABox)item;
+                    selectedBoxes.Add(newBox);
+                }
+            }
+
+            return selectedBoxes;
+
+        }
+
+        /// <summary>
+        /// Grabs the selected shipment from the List Box.
+        /// </summary>
+        /// <returns>FBAShipment model.</returns>
+        private FBAShipment GetShipment()
+        {
+            FBAShipment shipment = new FBAShipment();
+            //get the amz warehouse for the shipment
+            if (shipmentListBox.SelectedItem is FBAShipment)
+            {
+                shipment = (FBAShipment)shipmentListBox.SelectedItem;
+            }
+
+            return shipment;
+        }
+
         #endregion
 
 
@@ -110,46 +148,41 @@ namespace FBAContentApp.Views
         }
 
         /// <summary>
-        /// 
+        /// Reprints the selected boxes to the default label printer in the settings.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void printBoxBtn_Click(object sender, RoutedEventArgs e)
         {
-            //make a list of FBABoxes to print
-            List<FBABox> printBoxes = new List<FBABox>();
+            //Get selected boxes from listBox to print
+            List<FBABox> printBoxes = GetSelectedBoxes();
 
-            //get boxes from selected items in the listbox
-            foreach(var item in boxListBox.SelectedItems)
-            {
-                if(item is FBABox) //check that only FBABox items are being grabbed
-                {
-                    FBABox newBox = (FBABox)item;
-                    printBoxes.Add(newBox);
-                }
-            }
-
-            //placeholder for the amazonwarehouse
-            AmzWarehouseModel amzWarehouse = new AmzWarehouseModel();
-
-            //placeholder for company ship from address
-            CompanyAddressModel companyAddress = new CompanyAddressModel();
-
-            int totalBoxCount = 1; ;
-
-            //get the amz warehouse for the shipment
-            if(shipmentListBox.SelectedItem is FBAShipment)
-            {
-                FBAShipment shipment = (FBAShipment)shipmentListBox.SelectedItem;
-
-                amzWarehouse = shipment.FullfillmentShipTo;
-                companyAddress = shipment.CompanyShipFrom;
-                totalBoxCount = shipment.Boxes.Count;
-            }
+            //get selected shipments for details
+            FBAShipment shipment = GetShipment();
 
             //send the objects to viewmodel for reprinting.
-            historyViewModel.ReprintLabels(printBoxes, amzWarehouse, companyAddress, totalBoxCount);
+            historyViewModel.ReprintLabels(printBoxes, shipment.FullfillmentShipTo, shipment.CompanyShipFrom, shipment.Boxes.Count);
 
+        }
+
+        private void printPDFBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //get selected boxes from listbox
+            List<FBABox> selectedBoxes = GetSelectedBoxes();
+
+            //get the selected shipment
+            FBAShipment shipment = GetShipment();
+
+            //send objects to ViewModel to print to PDF
+            try
+            {
+                historyViewModel.ReprintToPDF(selectedBoxes, shipment.FullfillmentShipTo, shipment.CompanyShipFrom, shipment.Boxes.Count, shipment.ShipmentID);
+                MessageBox.Show("Labels successfully printed to PDF. Reprinted labels were saved to: \n" + Properties.Settings.Default.SaveFileDir, "Successfully Printed to PDF");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There was an error trying to print to PDF.\n" + ex.Message, "Unsuccessful Print to PDF");
+            }
         }
 
         /// <summary>
@@ -175,6 +208,7 @@ namespace FBAContentApp.Views
         {
             throw new NotImplementedException();
         }
+
 
 
         #endregion

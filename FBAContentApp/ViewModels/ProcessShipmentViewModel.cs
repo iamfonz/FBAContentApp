@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 using FBAContentApp.Exceptions;
+using System.Net;
 
 namespace FBAContentApp.ViewModels
 {
@@ -342,6 +343,58 @@ namespace FBAContentApp.ViewModels
 
 
 
+        }
+
+
+        public void SaveLabelsToPDF()
+        {
+            string zpl = "";
+            foreach(ZPLLabel label in LabelsFactory.BoxLabels)
+            {
+                zpl += label.ZPLCommand;
+            }
+
+            byte[] zplByte = Encoding.UTF8.GetBytes(zpl);
+
+            // instantiate request object
+            var request = (HttpWebRequest)WebRequest.Create("http://api.labelary.com/v1/printers/8dpmm/labels/4x8/");
+            request.Method = "POST";
+            request.Accept = "application/pdf";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = zplByte.Length;
+
+            //adding headers
+            request.Headers.Add("X-Rotation:90"); //rotate labels 90 degrees
+            request.Headers.Add("X-Page-Size", "Letter");
+
+            request.Headers.Add("X-Page-Layout:1x2"); // layout labels with 1 column and 3 rows (3 labels per page)
+
+            var requestStream = request.GetRequestStream();
+            requestStream.Write(zplByte, 0, zplByte.Length);
+            requestStream.Close();
+            try
+            {
+                //get the response from the request
+                var response = (HttpWebResponse)request.GetResponse();
+                //get the response stream
+                var responseStream = response.GetResponseStream();
+                //create file where response data will go
+                var fileStream = File.Create(SaveDirectory + "\\" + Shipment.ShipmentID + "-Labels.pdf");
+                //convert the responseStream to a file at specified path
+                responseStream.CopyTo(fileStream);
+                //close the stream
+                responseStream.Close();
+                fileStream.Close();
+
+                //inform of success
+                //Console.WriteLine("Successfully retrieved the PDF for the ZPL string!");
+
+            }
+            catch (WebException e)
+            {
+
+                //Console.WriteLine("ERROR: {0}\n", e.Message);
+            }
         }
 
 

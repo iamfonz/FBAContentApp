@@ -15,7 +15,7 @@
         }
     </style>
 
-    <title>FBA Content App User Guide</title>
+    <title>User Guide - FBA Box Content App</title>
 </head>
 <body data-spy="scroll" data-target="#v-pills-tab">
     <div class="container-fluid">
@@ -184,7 +184,7 @@
                     <!------------------------------------------------------- Start of PROCESSING Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="v-pills-processShipment" role="tabpanel" aria-labelledby="v-pills-processShipment-tab">
                         <h2 class="text-center">Processing a Shipment</h2><br /><br />
-                        <p>Now that a workbook has been created for a shipment, this program is ready to process it and print box content labels. Before proceeding, make sure you have a default <strong>Label Printer</strong> selected in <strong>Settings</strong>, as well as a <strong>Company Address</strong>, and a <strong>Save File Directory.</strong> If a <strong>Company Address</strong> for your company is not set, it will use the default one created at the time of install, which just a generic value. If <strong>Label Printer</strong> and <strong>Save File Directory</strong> are not set, the labels will not print and no file will be saved of the shipment details. However, the program will still save it to the database and you will be able to view the shipment in the <strong>History</strong> section of the application.</p>
+                        <p>Now that a workbook has been created for a shipment, this program is ready to process it and print box content labels. Before proceeding, make sure you have a default <strong>Label Printer</strong> selected in <strong>Settings</strong>, as well as a <strong>Company Address</strong>, and a <strong>Save File Directory.</strong> If a <strong>Company Address</strong> for your company is not set, it will use the default one created at the time of install, which just a generic value. If <strong>Label Printer</strong> is not set, you will not be able to print thermal labels. However you'll still be able to <strong>Print to PDF</strong> (<strong>Note</strong>: You will need to be connected to the internet to render a PDF file.). Lastly, if there is not a <strong>Save File Directory</strong> set in the <strong>Settings</strong> of the application, no file will be saved of the contents. However, the shipment will still be saved to the database allowing for reprinting from the <strong>History</strong> section of the application.
                         <p>Now that we have that out of the way, let's process a shipment.</p>
                         <br /><br />
                         <h4>1. Add Boxes</h4><br />
@@ -235,17 +235,24 @@
                         </figure><br /><br />
 
                         <h4>3. Print Boxes</h4><br />
-                        <p>Once the boxes have been added and an Amazone Warehouse has been selected, you are ready to print. Simply click the <strong>Print Boxes</strong> button and the labels will print as well as saving the shipment details in a JSON formatted file and to the database. A pop-up box will appear informing you of any errors/success.</p><br /><br />
+                        <p>Once the boxes have been added and an Amazone Warehouse has been selected, you are ready to print. You have two options for printing the labels; directly to a thermal printer, or generate a PDF file. Regardless of which one you click, the shipment details will save in a JSON formatted file to the <strong>Save File Directory</strong> as well as saved to the database. A pop-up box will appear informing you of any errors/success.</p>
+
+                        <p><strong>REMINDER</strong>: If there is no defaul thermal printer set in the <strong>Settings</strong> of the application, nothing will happen if you click <strong>Print Thermal Labels</strong>. You also have the option of creating a PDF file of the thermal labels. However, you must be connected to the internet because the PDF is returned from <a href="http://www.labelary.com/service.html">Labelry.com</a>'s API service.</p>
+                        <br /><br />
+
                         <figure class="figure" style="width:80%;">
-                            <img class="figure-img img-fluid" src="Resources/images/prcessComplete.jpg" alt="pop-up after printing." />
+                            <img class="figure-img img-fluid" src="Resources/images/prcessComplete.jpg" alt="pop-up after printing thermal labels." />
                             <figcaption class="figure-caption">
-                                Pop-up box after click the <strong>Print Boxes</strong> button.
+                                Pop-up box after click the <strong>Print Thermal Labels</strong> button. The labels should start to print from the default label printer configured in the <strong>Settings</strong> section.
                             </figcaption>
                         </figure>
                         <br /><br />
-                        <p>
-                            <strong>REMINDER:</strong> If a <strong>Company Address</strong> for your company is not set, it will use the default one created at the time of install, which just a generic value. If <strong>Label Printer</strong> and <strong>Save File Directory</strong> are not set, the labels will not print and no file will be saved of the shipment details. However, the program will still save it to the database and you will be able to view the shipment in the <strong>History</strong> section of the application.
-                        </p><br /><br /><br />
+                        <figure class="figure" style="width:80%;">
+                            <img class="figure-img img-fluid" src="Resources/images/processComPDF.jpg" alt="pop-up after printing to PDF." />
+                            <figcaption class="figure-caption">
+                                Pop-up box after click the <strong>Print to PDF</strong> button. The PDF will be saved to the <strong>Save File Directory</strong> configured in the <strong>Settings</strong> section of the application.
+                            </figcaption>
+                        </figure>
 
                     </div>
 
@@ -278,68 +285,124 @@
                     </div>
 
                     <!------------------------------------------------------- END of AMAZON Tab-pillpane----------------------------------------------------------------------------------------->
-
-
-
-
-
                     <!------------------------------------------------------- START of History Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="v-pills-shipmentsHistory" role="tabpanel" aria-labelledby="v-pills-shipmentsHistory-tab">
                         <h2 class="text-center">History</h2>
                         <br /><br />
                         <h4>Overview</h4>
                         <p>
-                            In this section of the application, a user can view all of the shipments that are stored in the database. Shipments get stored in the database when a shipment is processed and labels are printed from the <strong>Process Shipments</strong> section of the application.
+                            In this section of the application, a user can view all of the shipments that are stored in the database. Shipments get stored in the database when a shipment is processed and labels are printed from the <strong>Process Shipments</strong> section of the application. From here you can reprint labels for shipments. You can select one or multiple boxes at a time. You also have the ability to search for a shipment. The search field is case insensitive.
                         </p>
+                        <p>By default, the shipments are ordered by date. The most recent shipment is at the top of the first list box. The second list box contains all the boxes belonging to the selected shipment. To the right of the boxes list box is the shipment details.</p><br /><br />
 
+                        <figure class="figure">
+                            <img src="Resources/images/historyHome.jpg" class="figure-img img-fluid" alt="History Page" />
+                            <figcaption class="figure-caption">
+                                The <strong>History</strong> section of the application.
+                            </figcaption>
+                        </figure>
+                        <br /><br />
+                        <p>You can select as many boxes at a time for reprinting. The print buttons do exactly as labeled. One prints directly to the default label printer configured in <strong>Settings</strong>. The other renders a PDF file of the box labels to reprint. </p>
+                        <p><strong>Reminder</strong>: For PDF's, you must be connected to the internet. Also, if no <strong>Label Printer</strong> is configured in <strong>Settings</strong> the labels will not print.</p>
 
+                        <figure class="figure">
+                            <img src="Resources/images/historyMultSelect.jpg" class="figure-img img-fluid" alt="Multiple boxes selected" />
+                            <figcaption class="figure-caption">
+                                Multiple boxes selected in <strong>History</strong>.
+                            </figcaption>
+                        </figure>
                     </div>
                     <!------------------------------------------------------- END of History Tab-pillpane----------------------------------------------------------------------------------------->
 
 
 
 
-
-
+                    <!------------------------------------------------------- Start of SETTINGS Tab-pillpane----------------------------------------------------------------------------------------->
                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 
-                        <h3 class="text-center" id="item-settings-1">Settings Overview</h3>
+                        <h3 class="text-center" id="item-settings-1">Settings Overview</h3><br /><br />
                         <p>
-                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
-
-                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum..
+                            The <strong>Settings</strong> section of the application stores all of the default values used throughout the application. The values set here will be used for printing to a thermal printer. Also all files are saved where the <strong>Save File Directory</strong> points.
                         </p>
 
+                        <figure class="figure">
+                            <img src="Resources/images/settings.jpg" class="figure-img img-fluid" alt="Settings View" />
+                            <figcaption class="figure-caption">
+                                The <strong>Settings</strong> section of the application.
+                            </figcaption>
+                        </figure>
 
 
                         <h5 id="item-settings-2">Adding a Company Address</h5>
                         <p>
-                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
-
-                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum.
+                            <strong>Company Address</strong> has a loaded default one that's from the database seeding. The address is used to make the labels with the appropriate ship from. When adding a new address, you should fill out the information exactly how your Amazon Seller Central account shows. This way the label that's generated will look like the shipping labels Amazon provides.
                         </p>
+                        <p>To add a new <strong>Company Ship From</strong> address, simply click the <strong>Add New Ship From</strong> button and fill out the form in the window that pops up. Again, it's highly recommended to fill out the form with the exact values configured in your Amazon Seller Central account.</p><br />
+                        <figure class="figure">
+                            <img src="Resources/images/settingsCompanyNew.jpg" class="figure-img img-fluid" alt="Adding a New Ship From Company" />
+                            <figcaption class="figure-caption">
+                                Clicking the <strong>Add New Ship From</strong> button makes a new window appear with a form to add a new <strong>Ship From Company Address</strong>
+                            </figcaption>
+                        </figure><br />
+                        <p>Additionally, you can also edit any existing addresses. Simply select it from the drop-down, and click <strong>Edit Ship From</strong>. The same window will appear with all the details filled out. Make changes as needed. To delete, select the address and click the <strong>Delete Ship From</strong> button.</p>
+                        <br />
+                        <br />
 
 
                         <h5 id="item-settings-3">Selecting a Label Printer</h5>
                         <p>
-                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
-
-                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum.
-                        </p>
-
+                            The drop-down menu for <strong>Label Printer</strong> is a populated by gathering the name of all the install printers. Select the thermal printer you wish to use. <strong>Note</strong>: the thermal printer you choose should have the capability of interpreting Zebra Programming Language 2 (ZPL2) commands. If you don't have a thermal printer that supports this, you can always render a PDF file of the labels.
+                        </p><br />
+                        <figure class="figure">
+                            <img src="Resources/images/settingsPrinter.jpg" class="figure-img img-fluid" alt="Selecting a Printer" />
+                            <figcaption class="figure-caption">
+                                Select a thermal label printer from the list of installed printers.
+                            </figcaption>
+                        </figure><br /><br />
 
                         <h5 id="item-settings-4">Selecting Save Directory</h5>
                         <p>
-                            Nunc et enim porttitor, pellentesque ipsum in, scelerisque lectus. Praesent tempus mauris quis auctor euismod. Nulla volutpat mauris sed quam viverra hendrerit. In et tristique mi. Curabitur varius augue non odio lacinia, sit amet rhoncus libero varius. Praesent varius et velit ac venenatis. Phasellus posuere vitae dolor et iaculis. Ut interdum blandit lorem sed ornare. Sed blandit ex ullamcorper libero bibendum bibendum. Nulla efficitur non sapien et mattis. Donec et semper sapien. Pellentesque eu congue nisl. Sed nec condimentum justo, eu ornare eros. Fusce eu nisi libero.
-
-                            Proin et enim et sapien tincidunt facilisis in ac ipsum. Morbi et convallis justo. Sed ut mollis magna. Duis orci nisl, porttitor quis vulputate vel, lobortis eu ligula. Cras sit amet porttitor magna. Cras id justo eu risus egestas tincidunt. Aenean fringilla, massa vitae convallis efficitur, nisi tellus hendrerit leo, eu sodales purus felis sit amet odio. Pellentesque convallis ex libero, vitae scelerisque turpis euismod id. Quisque vitae posuere mi. Cras eu semper tortor. Donec tristique nec est in facilisis. Sed bibendum bibendum rutrum.
+                            The <strong>Save File Directory</strong> is where all files will be saved. The program generates a few different files. When a shipment is processed, a JSON text file of the shipment details is saved. Another text file is also generated which contains the ZPL2 command. It's produced just in case the user would like to see it for whatever reason.
                         </p>
-
+                        <p>
+                            This directory is also where PDF labels are saved when labels are printed to PDF. There's no default place where files will be saved. If this is not set, no files will be set and PDF files will not be able to be generated.
+                        </p><br />
+                        <figure class="figure">
+                            <img src="Resources/images/settingsDirectory.jpg" class="figure-img img-fluid" alt="Save file directory" />
+                            <figcaption class="figure-caption">
+                                This directory is where all files generated by the program will be saved.
+                            </figcaption>
+                        </figure>
 
                     </div>
+                    <!------------------------------------------------------- END of SETTINGS Tab-pillpane----------------------------------------------------------------------------------------->
 
                     <div class="tab-pane fade" id="v-pills-about" role="tabpanel" aria-labelledby="v-pills-about-tab">
-                        About and Attributions
+                        <h3  id="item-settings-1">About</h3>
+
+                        <h5 >Author: Alfonzo Avila</h5>
+                        <h5 >Email: alfonzoavila@beanvelopment.com</h5>
+                        <h5 >2018</h5><br /><br />
+                        
+                        <h3>Attribution</h3>
+                        <h5><a href="https://docs.microsoft.com/en-us/ef/ef6/">Entity Framework</a></h5>
+                        <p>Used for easily interacting with database.</p>
+
+                        <h5><a href="https://github.com/cefsharp/CefSharp">CefSharp</a> - .NET Wrapper for Chromium Embedded Framework</h5>
+                        <p>Used this library to display the user guide HTML page.</p>
+
+                        <h5><a href="https://www.newtonsoft.com/json">Newtonsoft JSON.NET</a></h5>
+                        <p>Used for easily serializing shipment to JSON.</p>
+
+                        <h5><a href="https://github.com/JanKallman/EPPlus">EPPlus</a></h5>
+                        <p>Great library for reading Excel workbooks. It's used to read the box content workbook in the <strong>Process Shipment</strong> section.</p>
+
+                        <h5><a href="http://www.labelry.com">Labelry.com</a></h5>
+                        <p>Great tool for rendering ZPL2 command labels. Used this to implement printing labels to PDF.</p>
+
+                        <h5><a href="https://getbootstrap.com/">Bootstrap 4</a></h5>
+                        <p>Used for styling this user guide.</p>
+
                     </div>
 
 

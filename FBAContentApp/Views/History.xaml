@@ -82,8 +82,8 @@
         
 
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="5">
-            
-            <Button x:Name="printBoxBtn"  Click="printBoxBtn_Click"  Content="Reprint Box Label(s)" Style="{StaticResource amzwhseButton}" />
+            <Button x:Name="printPDFBtn"  Click="printPDFBtn_Click"  Content="Reprint PDF Label(s)" Style="{StaticResource amzwhseButton}" />
+            <Button x:Name="printBoxBtn"  Click="printBoxBtn_Click"  Content="Reprint Thermal Label(s)" Style="{StaticResource amzwhseButton}" />
         </WrapPanel>
 
         <Button Content="Back To Main Menu" Style="{StaticResource BackToMenuBtn}" Click="BackToMain_Button_Click" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6"/>

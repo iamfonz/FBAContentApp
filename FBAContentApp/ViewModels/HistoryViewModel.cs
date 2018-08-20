@@ -3,7 +3,9 @@ using FBAContentApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -85,6 +87,77 @@ namespace FBAContentApp.ViewModels
             foreach (var label in LabelFactory.BoxLabels) //send each BoxLabel to printer.
             {
                 RawPrinterHelper.SendStringToPrinter(labelPrinter, label.ZPLCommand);
+            }
+        }
+
+        /// <summary>
+        /// Reprints FBA Box labels to PDF using labelry.com API service.
+        /// </summary>
+        /// <param name="boxestoPrint">List of FBABox to be reprinted</FBABox></param>
+        /// <param name="amzWarehouse">Ship To Amazon Warehouse</param>
+        /// <param name="companyAddress">Ship From Company Address</param>
+        /// <param name="totalBoxCount">Total boxes in the shipment</param>
+        /// <param name="shipmentID">The Shipment Id of the boxes.</param>
+        public void ReprintToPDF(List<FBABox> boxestoPrint, AmzWarehouseModel amzWarehouse, CompanyAddressModel companyAddress, int totalBoxCount, string shipmentID)
+        {
+            //empty string to fill zpl command
+            string zpl = "";
+            string boxesPrinted = "";
+
+            //instantiate new LabelFactory with passed in parameters.
+            LabelFactory = new LabelFactory(boxestoPrint, amzWarehouse, companyAddress, totalBoxCount);
+
+            //fill in string for ZPL command
+            foreach (ZPLLabel label in LabelFactory.BoxLabels)
+            {
+                zpl += label.ZPLCommand;
+                boxesPrinted += label.Box.BoxNumber + "-";
+            }
+
+            //make a savepath string
+            string filePath = Properties.Settings.Default.SaveFileDir + "\\" + shipmentID + "_BOXES_" + boxesPrinted + " _Reprinted_Labels.pdf";
+
+            //get string in UTF8 bytes
+            byte[] zplByte = Encoding.UTF8.GetBytes(zpl);
+
+            // instantiate request object
+            var request = (HttpWebRequest)WebRequest.Create("http://api.labelary.com/v1/printers/8dpmm/labels/4x8/");
+            request.Method = "POST";
+            request.Accept = "application/pdf";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = zplByte.Length;
+
+            //adding headers
+            request.Headers.Add("X-Rotation:90"); //rotate labels 90 degrees
+            request.Headers.Add("X-Page-Size", "Letter");
+
+            request.Headers.Add("X-Page-Layout:1x2"); // layout labels with 1 column and 3 rows (3 labels per page)
+
+            var requestStream = request.GetRequestStream();
+            requestStream.Write(zplByte, 0, zplByte.Length);
+            requestStream.Close();
+            try
+            {
+                //get the response from the request
+                var response = (HttpWebResponse)request.GetResponse();
+                //get the response stream
+                var responseStream = response.GetResponseStream();
+                //create file where response data will go
+                var fileStream = File.Create(filePath);
+                //convert the responseStream to a file at specified path
+                responseStream.CopyTo(fileStream);
+                //close the stream
+                responseStream.Close();
+                fileStream.Close();
+
+                //inform of success
+                //Console.WriteLine("Successfully retrieved the PDF for the ZPL string!");
+
+            }
+            catch (WebException e)
+            {
+
+                //Console.WriteLine("ERROR: {0}\n", e.Message);
             }
         }
 

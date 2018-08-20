@@ -49,7 +49,7 @@ namespace FBAContentApp.Views
             cmbx_AmazonWhses.ItemsSource = ProcessShipmentVM.AmzWarehouses;
             cmbx_AmazonWhses.Items.Refresh();
 
-        } 
+        }
 
         void RefreshGUI()
         {
@@ -63,6 +63,57 @@ namespace FBAContentApp.Views
             lbl_BoxCount.Content = "0";
             //clear view model.
             ProcessShipmentVM.ClearAll();
+        }
+
+        private bool BoxesLoadedAmzSelected()
+        {
+            if (ProcessShipmentVM.Shipment.Boxes.Count > 0 && cmbx_AmazonWhses.SelectedItem is AmzWarehouseModel)// Check that there are boxes
+            {
+                //set amazon fulfillment center to view model shipment
+                ProcessShipmentVM.Shipment.FullfillmentShipTo = (AmzWarehouseModel)cmbx_AmazonWhses.SelectedItem;
+
+                // make viewModel create ZPL labels.
+                ProcessShipmentVM.MakeBoxLabels();
+
+                return true;
+
+            }
+            else
+            {
+                MessageBox.Show("Boxes must be entered and an Amazon Warehouse must be selected to proceed.");
+                return false;
+            }
+
+
+        }
+
+        private string SaveShipment()
+        {
+            string messageString = "";
+
+            //save the shipment to database from the ViewModel
+            try
+            {
+                ProcessShipmentVM.SaveShipmentToDB();
+                messageString += "Saved Shipment " + ProcessShipmentVM.Shipment.ShipmentID + " to database.";
+            }
+            catch (AlreadyExistsInDBException ex)
+            {
+                messageString += "\n" + ex.Message;
+            }
+
+            //save shipment file
+            try
+            {
+                ProcessShipmentVM.SaveShipmentToFile();
+                messageString += "\nSaved the contents file successfully!";
+            }
+            catch (Exceptions.NonSaveableException exc)
+            {
+                messageString += "\n" + exc.Message;
+            }
+
+            return messageString;
         }
 
         #endregion
@@ -158,71 +209,61 @@ namespace FBAContentApp.Views
         /// <param name="e"></param>
         private void btn_PrintBoxes_Click(object sender, RoutedEventArgs e)
         {
-            if(ProcessShipmentVM.Shipment.Boxes.Count > 0)// Check that there are boxes
+
+            if (BoxesLoadedAmzSelected())//check that an Amazon Warehouse has been selected
             {
-                if(cmbx_AmazonWhses.SelectedItem is AmzWarehouseModel)//check that an Amazon Warehouse has been selected
+                string messageString = "";
+
+                if (ProcessShipmentVM.LabelPrinter != null) //check for a default printer.
                 {
-                    string messageString = "";
-
-
-                    //set amazon fulfillment center to view model shipment
-                    ProcessShipmentVM.Shipment.FullfillmentShipTo = (AmzWarehouseModel)cmbx_AmazonWhses.SelectedItem;
-
-                    // make viewModel create ZPL labels.
-                    ProcessShipmentVM.MakeBoxLabels();
-
-                    if (ProcessShipmentVM.LabelPrinter != null) //check for a default printer.
+                    foreach (var label in ProcessShipmentVM.LabelsFactory.BoxLabels) //send each BoxLabel to printer.
                     {
-                        foreach (var label in ProcessShipmentVM.LabelsFactory.BoxLabels) //send each BoxLabel to printer.
-                        {
-                            RawPrinterHelper.SendStringToPrinter(ProcessShipmentVM.LabelPrinter, label.ZPLCommand);
-                        }
-
-                        //save the shipment to database from the ViewModel
-                        try
-                        {
-                            ProcessShipmentVM.SaveShipmentToDB();
-                            messageString += "Saved Shipment " + ProcessShipmentVM.Shipment.ShipmentID + " to database.";
-                        }catch(AlreadyExistsInDBException ex)
-                        {
-                            messageString += ex.Message;
-                        }
-                        
-                        //save shipment file
-                        try
-                        {
-                            ProcessShipmentVM.SaveShipmentToFile();
-                            messageString += "\nSaved the contents file successfully!";
-                        }
-                        catch (Exceptions.NonSaveableException exc)
-                        {
-                            messageString += "\n" + exc.Message;
-                        }
-
-                        //show dialogbox that it was processed successfully
-                        MessageBox.Show(messageString);
-
-                        //reinitialize GUI
-                        RefreshGUI();
+                        RawPrinterHelper.SendStringToPrinter(ProcessShipmentVM.LabelPrinter, label.ZPLCommand);
                     }
-                    else
-                    {
-                        MessageBox.Show("A default printer is not set in the settings. Go to Main Menu>Settings and select an installed printer and click 'Save'. Then try again.");
-                    }
-                    
+
+                    messageString = SaveShipment();
+
+                    //show dialogbox that it was processed successfully
+                    MessageBox.Show(messageString, "Print Thermal Labels");
+
+                    //reinitialize GUI
+                    RefreshGUI();
                 }
                 else
                 {
-                    MessageBox.Show("You must select an Amazon warehouse from the drop-down menu.");
-                }   
-
+                    MessageBox.Show("A default label printer is not set in the settings. Go to Main Menu>Settings and select an installed printer and click 'Save'. Then try again. If you don't have a thermal label printer, click the \"Print to PDF\" button to render the labels in a PDF file.", "Print Thermal Labels");
+                }
             }
-            else
+        }
+
+        /// <summary>
+        /// Creates a PDF with all the shipment labels for the shipment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_PrintPDF_Click(object sender, RoutedEventArgs e)
+        {
+            if (BoxesLoadedAmzSelected())
             {
-                MessageBox.Show("There are no boxes loaded into the shipment! Clicl 'Add Boxes' and select and Excel Workbook that contains box content.");
-            }
+                //save the shipment to db and file and set the message for user
+                string message = SaveShipment();
 
-          
+                try
+                {
+                    //print the labels to PDF
+                    ProcessShipmentVM.SaveLabelsToPDF();
+                    message += "ShipmentId: " + ProcessShipmentVM.Shipment.ShipmentID + " Shipping labels were save to \n" +
+                        ProcessShipmentVM.SaveDirectory;
+
+                }catch(Exception exc)
+                {
+                    message += "\n" + exc.Message;
+                }
+
+                MessageBox.Show(message, "Print Labels to PDF");
+
+
+            }
 
         }
 
@@ -237,6 +278,9 @@ namespace FBAContentApp.Views
         }
 
 
+
+
+
         #endregion
 
 
@@ -249,8 +293,9 @@ namespace FBAContentApp.Views
         }
 
 
+
         #endregion
 
-        
+
     }
 }
