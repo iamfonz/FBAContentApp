@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\obj\x86\Debug\
+C:\GitStuffs\fbacontentlabelerapp\FBAContentApp\obj\x86\Debug\
 FBAContentApp
 none
 false
 DEBUG;TRACE
-C:\Users\Back-Warehouse\Documents\Visual Studio 2017\Projects\FBAContentApp\FBAContentApp\App.xaml
-9-346647147
+C:\GitStuffs\fbacontentlabelerapp\FBAContentApp\App.xaml
+81582119728
 1899198295
-48-480542998
-26-2090715837
-MainWindow.xaml;Views\AmazonWarehouses.xaml;Views\AppWindows\AmazonWarehouseWin.xaml;Views\AppWindows\CompanyAddressWin.xaml;Views\HelpPage.xaml;Views\History.xaml;Views\MainMenu.xaml;Views\NewShipment.xaml;Views\SettingsView.xaml;
+47-221709424
+22-123561840
+MainWindow.xaml;Views\AmazonWarehouses.xaml;Views\AppWindows\AmazonWarehouseWin.xaml;Views\AppWindows\CompanyAddressWin.xaml;Views\History.xaml;Views\MainMenu.xaml;Views\NewShipment.xaml;Views\SettingsView.xaml;
 
 False
 

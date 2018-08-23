@@ -50,7 +50,11 @@ namespace FBAContentApp.Views
 
         private void helpBtn_Click(object sender, RoutedEventArgs e)
         {
-            Switcher.Switch(new HelpPage());
+            //Switcher.Switch(new HelpPage());
+            //get project root path to grab html
+            string htmlDir = System.IO.Path.GetFullPath(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\" + "Views\\AppWindows\\Help.html"));
+
+            System.Diagnostics.Process.Start(htmlDir);
         }
 
         #endregion

@@ -17,8 +17,18 @@
 
     <title>User Guide - FBA Box Content App</title>
 </head>
-<body data-spy="scroll" data-target="#v-pills-tab">
+<body>
     <div class="container-fluid">
+        <!--<div class="row">
+            <div class="col">
+
+                <img src="Resources/images/boxCarton.png" class="rounded float-left" />
+                <h1 style="padding-top:2em;">FBA Box Content App User Guide</h1>
+
+            </div>
+
+        </div>-->
+
         <div class="row">
 
             <div class="col scrollClass sticky-top">
@@ -313,12 +323,8 @@
                         </figure>
                     </div>
                     <!------------------------------------------------------- END of History Tab-pillpane----------------------------------------------------------------------------------------->
-
-
-
-
                     <!------------------------------------------------------- Start of SETTINGS Tab-pillpane----------------------------------------------------------------------------------------->
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" data-spy="scroll" data-target="#v-pills-tab">
 
                         <h3 class="text-center" id="item-settings-1">Settings Overview</h3><br /><br />
                         <p>
@@ -378,18 +384,27 @@
                     <!------------------------------------------------------- END of SETTINGS Tab-pillpane----------------------------------------------------------------------------------------->
 
                     <div class="tab-pane fade" id="v-pills-about" role="tabpanel" aria-labelledby="v-pills-about-tab">
-                        <h3  id="item-settings-1">About</h3>
+                        <h3 id="item-settings-1">About</h3>
 
-                        <h5 >Author: Alfonzo Avila</h5>
-                        <h5 >Email: alfonzoavila@beanvelopment.com</h5>
-                        <h5 >2018</h5><br /><br />
-                        
+                        <dl class="row">
+                            <dt class="col-sm-3">Author</dt>
+                            <dd class="col-sm-9">Alfonzo Avila</dd>
+
+                            <dt class="col-sm-3">Email</dt>
+                            <dd class="col-sm-9">
+                                <p>alfonzoavila@beanvelopment.com</p>
+                            </dd>
+
+                            <dt class="col-sm-3">Year</dt>
+                            <dd class="col-sm-9">2018</dd>
+
+
+                        </dl>
+
+
                         <h3>Attribution</h3>
                         <h5><a href="https://docs.microsoft.com/en-us/ef/ef6/">Entity Framework</a></h5>
                         <p>Used for easily interacting with database.</p>
-
-                        <h5><a href="https://github.com/cefsharp/CefSharp">CefSharp</a> - .NET Wrapper for Chromium Embedded Framework</h5>
-                        <p>Used this library to display the user guide HTML page.</p>
 
                         <h5><a href="https://www.newtonsoft.com/json">Newtonsoft JSON.NET</a></h5>
                         <p>Used for easily serializing shipment to JSON.</p>
