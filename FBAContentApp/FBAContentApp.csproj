@@ -137,25 +137,13 @@
     <Compile Include="Entities\ShipmentBox.cs" />
     <Compile Include="Entities\State.cs" />
     <Compile Include="Exceptions\ContentsExceptions.cs" />
-    <Compile Include="Migrations\201807122120149_Init.cs" />
-    <Compile Include="Migrations\201807122120149_Init.Designer.cs">
-      <DependentUpon>201807122120149_Init.cs</DependentUpon>
+    <Compile Include="Migrations\202007222212535_init.cs" />
+    <Compile Include="Migrations\202007222212535_init.Designer.cs">
+      <DependentUpon>202007222212535_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807122121371_Init2.cs" />
-    <Compile Include="Migrations\201807122121371_Init2.Designer.cs">
-      <DependentUpon>201807122121371_Init2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808062019562_Init3.cs" />
-    <Compile Include="Migrations\201808062019562_Init3.Designer.cs">
-      <DependentUpon>201808062019562_Init3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808072211064_Init4.cs" />
-    <Compile Include="Migrations\201808072211064_Init4.Designer.cs">
-      <DependentUpon>201808072211064_Init4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201808072216557_Init5.cs" />
-    <Compile Include="Migrations\201808072216557_Init5.Designer.cs">
-      <DependentUpon>201808072216557_Init5.cs</DependentUpon>
+    <Compile Include="Migrations\202007231716387_Init2.cs" />
+    <Compile Include="Migrations\202007231716387_Init2.Designer.cs">
+      <DependentUpon>202007231716387_Init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AmzWarehouseModel.cs" />
@@ -252,20 +240,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201807122120149_Init.resx">
-      <DependentUpon>201807122120149_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007222212535_init.resx">
+      <DependentUpon>202007222212535_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807122121371_Init2.resx">
-      <DependentUpon>201807122121371_Init2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808062019562_Init3.resx">
-      <DependentUpon>201808062019562_Init3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808072211064_Init4.resx">
-      <DependentUpon>201808072211064_Init4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201808072216557_Init5.resx">
-      <DependentUpon>201808072216557_Init5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007231716387_Init2.resx">
+      <DependentUpon>202007231716387_Init2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

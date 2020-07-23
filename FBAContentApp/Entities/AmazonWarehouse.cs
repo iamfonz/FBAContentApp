@@ -21,6 +21,7 @@ namespace FBAContentApp.Entities
 
         public string City { get; set; }
 
+        public int StateId { get; set; }
         public virtual State State { get; set; }
 
         public string ZipCode { get; set; }
